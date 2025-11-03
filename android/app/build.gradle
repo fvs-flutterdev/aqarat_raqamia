@@ -1,3 +1,10 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+    id "com.google.gms.google-services"
+}
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -8,8 +15,11 @@ if (localPropertiesFile.exists()) {
 
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
-    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+    throw new FileNotFoundException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+} else {
+    println "Flutter SDK found at: $flutterRoot"
 }
+
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
@@ -26,14 +36,9 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'com.google.gms.google-services'
-apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
-
 android {
     namespace "com.fvs.aqaratraqamia.ksa"
-    compileSdkVersion 35
+    compileSdkVersion 36
     flutter.ndkVersion
     packagingOptions {
         pickFirst '**/libc++_shared.so'
@@ -84,8 +89,8 @@ android {
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
 
         minSdkVersion 23
-        targetSdkVersion 35
-        compileSdk 35
+        targetSdkVersion 36
+        compileSdk 36
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -119,11 +124,19 @@ flutter {
     source '../..'
 }
 
+repositories {
+    google()
+    mavenCentral()
+}
+
 dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.4'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation platform('com.google.firebase:firebase-bom:33.16.0')
-    implementation 'com.google.firebase:firebase-analytics-ktx'
+    // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:33.7.0')
+    
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-analytics:17.5.0'
     implementation 'com.android.support:multidex:2.0.1'
     implementation 'com.google.android.gms:play-services-maps:19.2.0'
     implementation 'ch.qos.logback:logback-classic:1.2.3'

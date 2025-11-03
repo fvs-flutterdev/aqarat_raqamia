@@ -1,6 +1,7 @@
 import 'package:aqarat_raqamia/view/base/show_toast.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
+
 import '../translation/locale_keys.g.dart';
 import 'app_constant.dart';
 import 'base_url.dart';
@@ -65,8 +66,8 @@ class DioHelper {
       "status": status,
       "paginated": isPaginate,
       "region_id": regionId,
-      "city":city,
-      "district":district,
+      "city": city,
+      "district": district,
       // "cities_ids[]":cities,
 
       // 'search_query': search,
@@ -93,8 +94,8 @@ class DioHelper {
             "status": status,
             "paginated": isPaginate,
             "region_id": regionId,
-            "city":city,
-            "district":district,
+            "city": city,
+            "district": district,
             // "cities_ids[]":cities,
 
             // 'search_query': search,
@@ -113,7 +114,7 @@ class DioHelper {
       print('STATUS CODE: ${response.statusCode}');
 
       return response;
-    } on DioError catch (error) {
+    } on DioException catch (error) {
       print(error.response?.statusMessage);
       print(error.response?.statusCode);
       showCustomSnackBar(
@@ -182,8 +183,8 @@ class DioHelper {
       "cities_ids[]": cities,
       "ids[]": ids,
       "region_id": regionId,
-      "city":city,
-      "district":district,
+      "city": city,
+      "district": district,
 
       // 'search_query': search,
       // 'page': page,
@@ -211,8 +212,8 @@ class DioHelper {
             "cities_ids[]": cities,
             "ids[]": ids,
             "region_id": regionId,
-            "city":city,
-            "district":district,
+            "city": city,
+            "district": district,
             // 'search_query': search,
             // 'page': page,
             // 'preferred_language': langId,
@@ -229,7 +230,7 @@ class DioHelper {
       print('STATUS CODE: ${response.statusCode}');
 
       return response;
-    } on DioError catch (error) {
+    } on DioException catch (error) {
       print(error.response?.statusMessage);
       print(error.response?.statusCode);
       showCustomSnackBar(
@@ -314,7 +315,7 @@ class DioHelper {
       print('STATUS CODE: ${response.statusCode}');
 
       return response;
-    } on DioError catch (error) {
+    } on DioException catch (error) {
       print(error.toString());
       if (error.response?.statusCode == 500) {
         showCustomSnackBar(
@@ -395,13 +396,13 @@ class DioHelper {
   //      data: data,
   //    );
   //  }
-  static DioError handleDioErrors(DioError error) {
+  static DioException handleDioErrors(DioException error) {
     switch (error.type) {
-      case DioErrorType.connectTimeout:
-      case DioErrorType.sendTimeout:
-      case DioErrorType.receiveTimeout:
+      case DioExceptionType.connectionTimeout:
+      case DioExceptionType.sendTimeout:
+      case DioExceptionType.receiveTimeout:
         throw const FetchDataException();
-      case DioErrorType.response:
+      case DioExceptionType.badResponse:
         switch (error.response?.statusCode) {
           case StatusCode.badRequest:
             throw const BadRequestException();
@@ -416,9 +417,9 @@ class DioHelper {
             throw InternalServerErrorException();
         }
         break;
-      case DioErrorType.cancel:
+      case DioExceptionType.cancel:
         break;
-      case DioErrorType.other:
+      case DioExceptionType.unknown:
         throw NoInternetConnectionException();
     }
     return error;
