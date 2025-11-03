@@ -169,10 +169,12 @@ class ServicesCubit extends Cubit<ServicesState> {
             ? locationCubit.regionTextController.text
             : (locationCubit.districtTextController.text.isNotEmpty
                 ? locationCubit.districtTextController.text
-                : ''),
+                : 'NON'),
         "locations": locationCubit.locationTextController.text.isNotEmpty
             ? locationCubit.locationTextController.text
-            : (locationCubit.address.isNotEmpty ? locationCubit.address : ''),
+            : (locationCubit.address.isNotEmpty
+                ? locationCubit.address
+                : 'NON'),
         "lan":
             lngAds?.toString() ?? locationCubit.position?.longitude.toString(),
         "lat":
