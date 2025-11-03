@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:aqarat_raqamia/bloc/location_cubit/state.dart';
 import 'package:aqarat_raqamia/utils/app_constant.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -37,8 +38,6 @@ class LocationCubit extends Cubit<LocationState> {
   TextEditingController districtTextController =
       TextEditingController(text: '');
 
-
-
   late AllRegionsModel allRegionsModel;
   bool? isGetRegion;
   int? regionId;
@@ -46,25 +45,21 @@ class LocationCubit extends Cubit<LocationState> {
   getAllRegions() {
     isGetRegion = false;
     emit(GetAllRegionsLoadingState());
-    DioHelper.getData(
-      url: BaseUrl.baseUrl + BaseUrl.GetRegions,
-      locale:"ar"
-
-    ).then((value) async{
+    DioHelper.getData(url: BaseUrl.baseUrl + BaseUrl.GetRegions, locale: "ar")
+        .then((value) async {
       allRegionsModel = AllRegionsModel.fromJson(value.data);
       allRegionsModel.data?.insert(
           0,
           RegionData(
               regionId: 0, istabbed: false, name: LocaleKeys.allRegions.tr()));
       isGetRegion = true;
-     // print('<<<<<<<<<<<<<<<<Region ${allRegionsModel.data}>>>>>>>>>>>>>>>>');
+      // print('<<<<<<<<<<<<<<<<Region ${allRegionsModel.data}>>>>>>>>>>>>>>>>');
       emit(GetAllRegionsSuccessState());
     }).catchError((error) {
       print(error.toString());
       emit(GetAllRegionsErrorState(error: error.toString()));
     });
   }
-
 
   int? cityId;
 
@@ -104,7 +99,7 @@ class LocationCubit extends Cubit<LocationState> {
     List<Placemark> newPlace = await placemarkFromCoordinates(
       pos.latitude,
       pos.longitude,
-     // localeIdentifier: "ar-SA",
+      // localeIdentifier: "ar-SA",
     );
 
     Placemark placeMark = newPlace[0];
@@ -142,12 +137,13 @@ class LocationCubit extends Cubit<LocationState> {
     for (var item in allRegionsModel.data!) {
       if (item.name!.contains(regionTextController.text)) {
         regionId = item.regionId;
-        currentRegion=item.regionId;
+        currentRegion = item.regionId;
         print('<<<<<<<<<<REGION ID<<<<<<<<<$regionId>>>>>>>>>>>>>>>>>>>');
-        print('<<<<<<<<<<CurrentRegion ID<<<<<<<<<$currentRegion>>>>>>>>>>>>>>>>>>>');
+        print(
+            '<<<<<<<<<<CurrentRegion ID<<<<<<<<<$currentRegion>>>>>>>>>>>>>>>>>>>');
 
-      // Future.wait([
-      // ]);
+        // Future.wait([
+        // ]);
         break;
       }
       // Future.delayed(Duration(seconds: 1)).then((value) {
@@ -160,10 +156,11 @@ class LocationCubit extends Cubit<LocationState> {
       // break;
     }
     emit(GetPlaceLocationState());
-     print('<<<<<<<<<<<<<<<<<<<<<<${regionId}>>>>>>>>>>>>4444>>>>>>>>>>');
+    print('<<<<<<<<<<<<<<<<<<<<<<${regionId}>>>>>>>>>>>>4444>>>>>>>>>>');
     print('<<<<<<<<<<<<<<<<<<<<<<${currentRegion}>>>>>>>>>>>>4444>>>>>>>>>>');
     getCitiesByRegionId(page: 1);
-    print('<<<<<<<<<!!!!!!!!!!!<<<<<<<<<<<<<${cityId}>>>>>>>>>>!!!!!!!!!!!!>>>>>>>>>>>>');
+    print(
+        '<<<<<<<<<!!!!!!!!!!!<<<<<<<<<<<<<${cityId}>>>>>>>>>>!!!!!!!!!!!!>>>>>>>>>>>>');
     print('<<<<<<//////<<<<<<<<<<$latAds>>>>>>>>>>>>>>>>');
     print('<<<<<<//////<<<<<<<<<<$lngAds>>>>>>>>>>>>>>>>');
     print('Area Location ${districtTextController.text}');
@@ -195,20 +192,19 @@ class LocationCubit extends Cubit<LocationState> {
 
   String addressFromMap = '';
 
-
-  getLocationFromMap(cameraPositions,bool? isEdit) async {
+  getLocationFromMap(cameraPositions, bool? isEdit) async {
     latAds = null;
     lngAds = null;
-    lngAdsEdit=null;
-    latAdsEdit=null;
+    lngAdsEdit = null;
+    latAdsEdit = null;
     emit(SetLocationFromMapLoadingState());
     await setLocaleIdentifier(myLocale.toString());
     List<Placemark> newPlace = await placemarkFromCoordinates(
-        cameraPositions.target.latitude, cameraPositions.target.longitude,
+      cameraPositions.target.latitude, cameraPositions.target.longitude,
       //  localeIdentifier:"ar-SA"
-        //myLocale.toString()
-        //myLocale.toString()
-        );
+      //myLocale.toString()
+      //myLocale.toString()
+    );
 
     Placemark placeMark = newPlace[0];
     String name = placeMark.name.toString();
@@ -236,13 +232,19 @@ class LocationCubit extends Cubit<LocationState> {
     cityTextController.text = placeMark.subAdministrativeArea.toString();
     districtTextController.text = placeMark.subLocality.toString();
     regionTextController.text = placeMark.administrativeArea.toString();
+    print(
+        '<<<<<<<<<<<<<<<<<<<${districtTextController.text}>>>>>>>>>>>>>>>>>>>>');
+    print(
+        '<<<<<<<<<<<<<<<<<<<${regionTextController.text}>>>>>>>>>>>>>>>>>>>>');
+    print('<<<<<<<<<<<<<<<<<<<${cityTextController.text}>>>>>>>>>>>>>>>>>>>>');
+    print('<<<<<<<<<<<<<<<<<<<${address}>>>>>>>>>>>>>>>>>>>>');
     print(cameraPositions.target.latitude);
     print(cameraPositions.target.longitude);
     latAds = cameraPositions.target.latitude;
     lngAds = cameraPositions.target.longitude;
-    if(isEdit==true){
-      latAdsEdit=cameraPositions.target.latitude;
-      lngAdsEdit=cameraPositions.target.longitude;
+    if (isEdit == true) {
+      latAdsEdit = cameraPositions.target.latitude;
+      lngAdsEdit = cameraPositions.target.longitude;
     }
     emit(GetLocationFromMapState());
     for (var item in allRegionsModel.data!) {
@@ -250,8 +252,8 @@ class LocationCubit extends Cubit<LocationState> {
         regionId = item.regionId;
         emit(GetLocationFromMapState());
         // Future.wait([
-     // await
-   //   getCitiesByRegionId(page: page++);
+        // await
+        //   getCitiesByRegionId(page: page++);
         //  ]);
 
         break;
@@ -277,15 +279,13 @@ class LocationCubit extends Cubit<LocationState> {
     print('///////////////////////// $addressFromMap');
   }
 
-
-
   late CityByRegionIdModel cityByRegionIdModel;
   bool? isGetCities;
-int page=1;
+  int page = 1;
   Future getCitiesByRegionId(
       {required int page, bool isNotPaginate = false}) async {
     isGetCities = false;
-   // cityId=null;
+    // cityId=null;
     DioHelper.getData(
       url: '${BaseUrl.baseUrl}${BaseUrl.GetCities}/$regionId',
       isPaginate: 0,
@@ -304,7 +304,6 @@ int page=1;
             break;
           }
         }
-
       } else {
         cityByRegionIdModel.meta?.currentPage =
             CityByRegionIdModel.fromJson(value.data).meta?.currentPage;
@@ -324,7 +323,7 @@ int page=1;
           cityId = item.cityId;
           // emit(GetPlaceLocationState());
           print('<<<<<<<<<<<<<<<CITYiD IS<<<<<$cityId>>>>>>>>>>>>>>>>>>>>');
-           emit(GetPlaceLocationState());
+          emit(GetPlaceLocationState());
           break;
         }
       }
