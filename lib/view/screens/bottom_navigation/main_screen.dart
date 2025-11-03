@@ -146,7 +146,7 @@ class _MainScreenNavigationState extends State<MainScreenNavigation> {
                       //     navBarConfig: NavBarConfig,
                       //   );
                       // } else {
-                      return Style13BottomNavBar(
+                      return StyleBottomNavBarWidget(
                         //   navBarDecoration: NavBarDecoration(padding: EdgeInsets.zero),
                         //   key: _navKey2,
                         // navBarDecoration: NavBarDecoration(),
@@ -158,6 +158,215 @@ class _MainScreenNavigationState extends State<MainScreenNavigation> {
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+class StyleBottomNavBarWidget extends StatelessWidget {
+  StyleBottomNavBarWidget({
+    required this.navBarConfig,
+    this.navBarDecoration = const NavBarDecoration(),
+    this.height,
+    this.middleItemSize = 50,
+    super.key,
+  }) : assert(
+          navBarConfig.items.length.isOdd,
+          "The number of items must be odd for r",
+        );
+
+  final NavBarConfig navBarConfig;
+  final NavBarDecoration navBarDecoration;
+  final double? height;
+  final double middleItemSize;
+
+  Widget _buildItem(BuildContext context, ItemConfig item, bool isSelected) =>
+      AnimatedContainer(
+        duration: Duration(milliseconds: 200),
+        curve: Curves.easeInOut,
+        padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            AnimatedContainer(
+              height: 50,
+              duration: Duration(milliseconds: 200),
+              padding: EdgeInsets.all(isSelected ? 8.0 : 6.0),
+              decoration: BoxDecoration(
+                color: isSelected
+                    ? item.activeForegroundColor.withOpacity(0.1)
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              child: IconTheme(
+                data: IconThemeData(
+                  size: (item.iconSize ?? 22.0) + (isSelected ? 2.0 : 0.0),
+                  color: isSelected
+                      ? item.activeForegroundColor
+                      : item.inactiveForegroundColor,
+                ),
+                child: isSelected ? item.icon : item.inactiveIcon,
+              ),
+            ),
+            if (item.title != null)
+              Padding(
+                padding: EdgeInsets.only(top: 4.0),
+                child: AnimatedDefaultTextStyle(
+                  duration: Duration(milliseconds: 200),
+                  style: item.textStyle.apply(
+                        color: isSelected
+                            ? item.activeForegroundColor
+                            : item.inactiveForegroundColor,
+                        fontSizeFactor: isSelected ? 1.0 : 0.9,
+                      ) ??
+                      TextStyle(
+                        fontSize: isSelected ? 11.0 : 10.0,
+                        fontWeight:
+                            isSelected ? FontWeight.w600 : FontWeight.normal,
+                        color: isSelected
+                            ? item.activeForegroundColor
+                            : item.inactiveForegroundColor,
+                      ),
+                  child: Text(
+                    item.title!,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+          ],
+        ),
+      );
+
+  Widget _buildMiddleItem(ItemConfig item, bool isSelected) => Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          AnimatedContainer(
+            duration: Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            child: FloatingActionButton(
+              onPressed: () {
+                navBarConfig.onItemSelected(
+                  (navBarConfig.items.length / 2).floor(),
+                );
+              },
+              elevation: isSelected ? 8.0 : 6.0,
+              backgroundColor: item.activeForegroundColor,
+              heroTag: "middleNavButton",
+              child: AnimatedSwitcher(
+                duration: Duration(milliseconds: 200),
+                child: IconTheme(
+                  key: ValueKey(isSelected),
+                  data: IconThemeData(
+                    size: item.iconSize ?? 24.0,
+                    color: item.inactiveForegroundColor,
+                  ),
+                  child: isSelected ? item.icon : item.inactiveIcon,
+                ),
+              ),
+            ),
+          ),
+          if (item.title != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 6.0),
+              child: AnimatedDefaultTextStyle(
+                duration: Duration(milliseconds: 200),
+                style: item.textStyle.apply(
+                      color: isSelected
+                          ? item.activeForegroundColor
+                          : item.inactiveForegroundColor,
+                      fontSizeFactor: isSelected ? 1.05 : 1.0,
+                    ) ??
+                    TextStyle(
+                      fontSize: isSelected ? 11.0 : 10.0,
+                      fontWeight:
+                          isSelected ? FontWeight.w600 : FontWeight.w500,
+                      color: isSelected
+                          ? item.activeForegroundColor
+                          : item.inactiveForegroundColor,
+                    ),
+                child: Text(
+                  item.title!,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+        ],
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    final midIndex = (navBarConfig.items.length / 2).floor();
+    return SizedBox(
+      height: height ?? 75.0,
+      child: Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.bottomCenter,
+        children: <Widget>[
+          // Bottom Navigation Bar Background
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: DecoratedNavBar(
+              decoration: navBarDecoration,
+              height: height,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: navBarConfig.items.asMap().entries.map((entry) {
+                    final int index = entry.key;
+                    final item = entry.value;
+
+                    if (index == midIndex) {
+                      // Placeholder for middle item
+                      return SizedBox(
+                        width: middleItemSize,
+                        height: middleItemSize,
+                      );
+                    }
+
+                    return Expanded(
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () {
+                            navBarConfig.onItemSelected(index);
+                          },
+                          borderRadius: BorderRadius.circular(16.0),
+                          child: _buildItem(
+                            context,
+                            item,
+                            navBarConfig.selectedIndex == index,
+                          ),
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+          ),
+          // Floating Action Button in the middle
+          Positioned(
+            top: -middleItemSize / 2 - 8,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: _buildMiddleItem(
+                navBarConfig.items[midIndex],
+                navBarConfig.selectedIndex == midIndex,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
