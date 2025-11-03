@@ -1,17 +1,15 @@
-import 'package:aqarat_raqamia/utils/media_query_value.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:upgrader/upgrader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
+import 'package:upgrader/upgrader.dart';
+
 import '../../../bloc/auth_cubit/auth_client/cubit.dart';
-import '../../../bloc/partner_sponsor_cubit/cubit.dart';
+import '../../../bloc/bottom_navbar_cubit/cubit.dart';
+import '../../../bloc/bottom_navbar_cubit/state.dart';
 import '../../../bloc/profile_cubit/cubit.dart';
 import '../../../bloc/profile_cubit/state.dart';
 import '../../../utils/app_constant.dart';
 import '../../../utils/deep_link/uni_services.dart';
-import '../../../bloc/bottom_navbar_cubit/cubit.dart';
-import '../../../bloc/bottom_navbar_cubit/state.dart';
 import '../../base/bottom_sheet.dart';
 
 class MainScreenNavigation extends StatefulWidget {
@@ -35,11 +33,13 @@ class _MainScreenNavigationState extends State<MainScreenNavigation> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await UniServices().init();
     });
-    context.read<NavbarCubit>().controller = PersistentTabController(initialIndex: 0);
+    context.read<NavbarCubit>().controller =
+        PersistentTabController(initialIndex: 0);
     FocusManager.instance.primaryFocus!.unfocus();
 
     super.initState();
   }
+
   isBottomSheetOpen() {
     print('///////////////$bottomSheetController//////////////');
     if (bottomSheetController != null) {
@@ -49,19 +49,19 @@ class _MainScreenNavigationState extends State<MainScreenNavigation> {
     }
   }
 
-
   @override
   void dispose() {
     bottomSheetController?.close;
     super.dispose();
     UniServices().dispose();
-
   }
-@override
+
+  @override
   void deactivate() {
-  context.read<NavbarCubit>().controller;
+    context.read<NavbarCubit>().controller;
     super.deactivate();
   }
+
   // final GlobalKey<NavigatorState> myKey = GlobalKey();
   // final GlobalKey<NavigatorState> myKey1 = GlobalKey();
   // final GlobalKey<PersistentTabViewScaffoldState> myKey1 = GlobalKey();
@@ -69,12 +69,11 @@ class _MainScreenNavigationState extends State<MainScreenNavigation> {
   @override
   Widget build(BuildContext context) {
     var navBarCubit = context.read<NavbarCubit>();
-  //  var partnerSponsorCubit = context.read<PartnerSponsorCubit>();
-  //  navBarCubit.makeFloatingFalse();
+    //  var partnerSponsorCubit = context.read<PartnerSponsorCubit>();
+    //  navBarCubit.makeFloatingFalse();
 
     return Scaffold(
-    //  key: ValueKey('Test'),
-
+      //  key: ValueKey('Test'),
 
       body: UpgradeAlert(
         upgrader: Upgrader(
@@ -98,67 +97,64 @@ class _MainScreenNavigationState extends State<MainScreenNavigation> {
             return BlocListener<ProfileCubit, ProfileState>(
               listener: (context, state) {},
               child: GestureDetector(
-                onTap: () {
-                  FocusManager.instance.primaryFocus!.unfocus();
-                  //  navBarCubit.makeFloatingFalse();
-                },
-                child: PersistentTabView(
-                //  key: ValueKey('ssss'),
-                  controller: navBarCubit.controller,
-                  gestureNavigationEnabled: true,
-
-                  //   navBarOverlap: ,
-                  onTabChanged: (index) {
-                    print(
-                        '/////////////////////////////$index ##################');
-                    navBarCubit.changeCurrentIndex(index);
-                    isBottomSheetOpen();
-                    // if (index == 0) {
-                    //   partnerSponsorCubit.playVideo();
-                    //   //  partnerSponsorCubit.getPartnerSponsor();
-                    //   // partnerSponsorCubit.videoPlayerController =
-                    //   //     VideoPlayerController.networkUrl(Uri.parse(
-                    //   //         //   partnerSponsorModel.data?.backgroundImage??
-                    //   //         'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'))
-                    //   //       ..initialize().then((_) {
-                    //   //         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-                    //   //         //  emit(PlayVideoSponsorSuccessState());
-                    //   //         partnerSponsorCubit.videoPlayerController
-                    //   //             .play();
-                    //   //         partnerSponsorCubit.videoPlayerController
-                    //   //             .setLooping(true);
-                    //   //       });
-                    // } else {
-                    //   partnerSponsorCubit.videoPlayerController.dispose();
-                    // }
+                  onTap: () {
+                    FocusManager.instance.primaryFocus!.unfocus();
+                    //  navBarCubit.makeFloatingFalse();
                   },
+                  child: PersistentTabView(
+                    //  key: ValueKey('ssss'),
+                    controller: navBarCubit.controller,
+                    gestureNavigationEnabled: true,
 
-                  tabs:
-                  accountType == 'service_provider' ?
-                  navBarCubit.providersItems()
-                     : navBarCubit.clientItems(),
-                  // tabs:
-                  // accountType == 'service_provider' ?
-                  // navBarCubit.clientItems()
-                  //     : navBarCubit.providersItems(),
-                  margin: EdgeInsets.only(top: 0),
-                  navBarBuilder: (NavBarConfig) {
-                    // if (accountType == 'service_provider') {
-                    //   return Style4BottomNavBar(
-                    //     navBarConfig: NavBarConfig,
-                    //   );
-                    // } else {
-                    return Style13BottomNavBar(
-                   //   navBarDecoration: NavBarDecoration(padding: EdgeInsets.zero),
-                   //   key: _navKey2,
-                      // navBarDecoration: NavBarDecoration(),
-                      navBarConfig: NavBarConfig,
-                    );
-                    // }
-                  },
-                )
+                    //   navBarOverlap: ,
+                    onTabChanged: (index) {
+                      print(
+                          '/////////////////////////////$index ##################');
+                      navBarCubit.changeCurrentIndex(index);
+                      isBottomSheetOpen();
+                      // if (index == 0) {
+                      //   partnerSponsorCubit.playVideo();
+                      //   //  partnerSponsorCubit.getPartnerSponsor();
+                      //   // partnerSponsorCubit.videoPlayerController =
+                      //   //     VideoPlayerController.networkUrl(Uri.parse(
+                      //   //         //   partnerSponsorModel.data?.backgroundImage??
+                      //   //         'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'))
+                      //   //       ..initialize().then((_) {
+                      //   //         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+                      //   //         //  emit(PlayVideoSponsorSuccessState());
+                      //   //         partnerSponsorCubit.videoPlayerController
+                      //   //             .play();
+                      //   //         partnerSponsorCubit.videoPlayerController
+                      //   //             .setLooping(true);
+                      //   //       });
+                      // } else {
+                      //   partnerSponsorCubit.videoPlayerController.dispose();
+                      // }
+                    },
 
-              ),
+                    tabs: accountType == 'service_provider'
+                        ? navBarCubit.providersItems()
+                        : navBarCubit.clientItems(),
+                    // tabs:
+                    // accountType == 'service_provider' ?
+                    // navBarCubit.clientItems()
+                    //     : navBarCubit.providersItems(),
+                    margin: EdgeInsets.only(top: 0),
+                    navBarBuilder: (NavBarConfig) {
+                      // if (accountType == 'service_provider') {
+                      //   return Style4BottomNavBar(
+                      //     navBarConfig: NavBarConfig,
+                      //   );
+                      // } else {
+                      return Style13BottomNavBar(
+                        //   navBarDecoration: NavBarDecoration(padding: EdgeInsets.zero),
+                        //   key: _navKey2,
+                        // navBarDecoration: NavBarDecoration(),
+                        navBarConfig: NavBarConfig,
+                      );
+                      // }
+                    },
+                  )),
             );
           },
         ),
@@ -166,10 +162,6 @@ class _MainScreenNavigationState extends State<MainScreenNavigation> {
     );
   }
 }
-
-
-
-
 
 // child: Scaffold(
 //   //   key: key,
