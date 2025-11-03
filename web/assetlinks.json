@@ -1,0 +1,5 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target" : { "namespace": "android_app", "package_name": "com.fvs.aqaratraqamia.ksa",
+    "sha256_cert_fingerprints": ["75:CA:24:A9:81:3B:D7:96:5F:E1:8D:66:54:C0:A1:EA:B7:64:D8:7B:73:82:FB:89:39:67:C0:AB:FF:58:F4:1A"] }
+}]

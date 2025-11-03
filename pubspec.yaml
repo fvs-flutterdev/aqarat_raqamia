@@ -1,0 +1,154 @@
+name: aqarat_raqamia
+description: A new Flutter project.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.18.4 <3.0.0"
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations: # Add this line
+    sdk: flutter
+  localization: ^2.1.1
+  easy_localization: ^3.0.3
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.2
+  flutter_screenutil: ^5.9.0
+  flutter_image_compress: ^2.1.0
+  shared_preferences: ^2.2.0
+  flutter_svg: ^2.0.10+1
+  percent_indicator: ^4.2.3
+  pin_code_fields: ^8.0.1
+  flutter_launcher_icons: ^0.13.1
+  auto_size_text: ^3.0.0
+  image_picker: ^1.0.2
+  path_provider: ^2.0.5
+  path: ^1.8.0
+  flutter_bloc: ^8.1.2
+  local_auth: ^2.3.0
+ # flutter_bloc: ^8.1.3
+  http: ^1.0.0
+  bloc: ^8.1.1
+ # flutter_bloc: ^8.1.2
+  google_maps_flutter: ^2.2.3
+  geolocator: ^12.0.0
+  geocoding: ^3.0.0
+  multi_select_flutter: ^4.1.3
+  firebase_core: ^2.15.1
+  firebase_messaging: ^14.6.6
+  flutter_local_notifications: ^17.0.0
+  dio: ^4.0.6
+  fluttertoast: ^8.2.5
+  equatable: ^2.0.3
+  shimmer: ^3.0.0
+  flutter_html: any
+  responsive_framework: ^1.4.0
+  url_launcher: ^6.1.11
+  carousel_slider: ^5.1.1
+  smooth_page_indicator: ^1.1.0
+  flutter_staggered_animations: ^1.1.1
+  cached_network_image: ^3.3.1
+  file_picker: ^10.2.0
+#  pdf: ^3.11.1
+  pusher_client: ^2.0.0
+  laravel_echo:
+  uuid: ^4.2.2
+  firebase_storage: ^11.4.1
+  webview_flutter: ^4.5.0
+  fancy_shimmer_image: ^2.0.3
+#  draggable_fab: ^0.1.4
+  overlay_support: ^2.1.0
+  permission_handler: ^11.0.1
+  photo_view: ^0.14.0
+  share_plus: ^7.2.1
+ # image_gallery_saver: ^2.0.3
+  gal: ^2.3.1
+  flutter_cache_manager: ^3.1.0
+  flutter_staggered_grid_view: ^0.7.0
+  persistent_bottom_nav_bar_v2: ^5.3.0
+
+ # open_file: ^3.1.4
+  focused_menu: ^1.0.5
+  image_watermark: ^0.1.0
+  dotted_border: ^2.1.0
+  flutter_cached_pdfview: ^0.4.3
+  video_player: ^2.9.1
+#  app_links: any
+#  go_router: any
+ # syncfusion_flutter_pdfviewer: ^26.2.14
+  uni_links2: ^0.6.0+2
+#  redacted: ^1.0.12
+  upgrader: ^10.3.0
+ # sentry_flutter: ^8.9.0
+  restart_app: ^1.2.1
+ # flutter_phoenix: ^1.0.0
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/app icon_aqarat.png"
+  remove_alpha_ios: true
+
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^2.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/images/
+    - assets/langs/
+    - assets/svg/
+    - assets/
+
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  fonts:
+    - family: Changa
+      fonts:
+        - asset: font/Changa-Bold.ttf
+    - family: Changa-regular
+      fonts:
+        - asset: font/Changa-Regular.ttf
+    - family: Changa-Medium
+      fonts:
+        - asset: font/Changa-Medium.ttf
+    - family: Changa-ExtraBold
+      fonts:
+        - asset: font/Changa-ExtraBold.ttf
+    - family: Changa-Light
+      fonts:
+        - asset: font/Changa-Light.ttf
+
+
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages

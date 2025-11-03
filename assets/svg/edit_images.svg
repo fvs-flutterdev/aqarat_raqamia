@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="60" height="60" viewBox="0 0 60 60">
+  <defs>
+    <filter id="Rectangle_23825" x="0" y="0" width="60" height="60" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feFlood flood-color="#708189" flood-opacity="0.102"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_76285" data-name="Group 76285" transform="translate(-13.5 -236.5)">
+    <g id="back" transform="translate(21 244)">
+      <g transform="matrix(1, 0, 0, 1, -7.5, -7.5)" filter="url(#Rectangle_23825)">
+        <rect id="Rectangle_23825-2" data-name="Rectangle 23825" width="45" height="45" rx="15" transform="translate(7.5 7.5)" fill="#fff"/>
+      </g>
+    </g>
+    <g id="Icon_feather-edit" data-name="Icon feather-edit" transform="translate(30.563 251.745)">
+      <path id="Path_118342" data-name="Path 118342" d="M12.783,6H5.174A2.174,2.174,0,0,0,3,8.174V23.392a2.174,2.174,0,0,0,2.174,2.174H20.392a2.174,2.174,0,0,0,2.174-2.174V15.783" transform="translate(0 -0.876)" fill="none" stroke="#e37d7d" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      <path id="Path_118343" data-name="Path 118343" d="M23.414,3.493a2.306,2.306,0,0,1,3.261,3.261L16.348,17.081,12,18.168l1.087-4.348Z" transform="translate(-2.478)" fill="none" stroke="#e37d7d" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    </g>
+  </g>
+</svg>

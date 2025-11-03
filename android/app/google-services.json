@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "856088950003",
+    "project_id": "aqarat-3daf3",
+    "storage_bucket": "aqarat-3daf3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856088950003:android:ed608d78eaf8337234f386",
+        "android_client_info": {
+          "package_name": "com.fvs.aqaratraqamia.ksa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "856088950003-o2thdor4hhsbq27er5mdep6cp2cstu7d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBySdIcx4zBzMHHex8tTKrg-dMWtRgPni8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "856088950003-o2thdor4hhsbq27er5mdep6cp2cstu7d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
