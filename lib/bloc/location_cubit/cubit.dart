@@ -247,25 +247,29 @@ class LocationCubit extends Cubit<LocationState> {
       lngAdsEdit = cameraPositions.target.longitude;
     }
     emit(GetLocationFromMapState());
-    for (var item in allRegionsModel.data!) {
-      if (item.name!.contains(regionTextController.text)) {
-        regionId = item.regionId;
-        emit(GetLocationFromMapState());
-        // Future.wait([
-        // await
-        //   getCitiesByRegionId(page: page++);
-        //  ]);
-
-        break;
+    if (allRegionsModel.data != null) {
+      for (var item in allRegionsModel.data!) {
+        if (item.name!.contains(regionTextController.text)) {
+          regionId = item.regionId;
+          emit(GetLocationFromMapState());
+          break;
+        }
       }
     }
-    getCitiesByRegionId(page: 1);
-    print('<<<<<<<<<<<<<<<<<<<<<<${regionId}>>>>>>>>>>>>>>>>>>>>>>');
-    for (var item in cityByRegionIdModel.data!) {
-      if (item.name!.contains(cityTextController.text)) {
-        cityId = item.cityId;
 
-        break;
+    // فقط استدعاء getCitiesByRegionId إذا كان regionId موجود
+    if (regionId != null) {
+      await getCitiesByRegionId(page: 1);
+      print('<<<<<<<<<<<<<<<<<<<<<<${regionId}>>>>>>>>>>>>>>>>>>>>>>');
+
+      // التحقق من أن cityByRegionIdModel.data موجود قبل الوصول إليه
+      if (cityByRegionIdModel.data != null) {
+        for (var item in cityByRegionIdModel.data!) {
+          if (item.name!.contains(cityTextController.text)) {
+            cityId = item.cityId;
+            break;
+          }
+        }
       }
     }
     emit(GetLocationFromMapState());

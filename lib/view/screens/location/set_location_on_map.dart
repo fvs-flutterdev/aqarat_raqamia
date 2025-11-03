@@ -43,6 +43,25 @@ class _SetLocationOnMapState extends State<SetLocationOnMap> {
   CameraPosition? cameraPositions;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      var locationCubit = LocationCubit.get(context);
+      // التأكد من أن المناطق محملة قبل استخدامها
+      if (locationCubit.isGetRegion == null ||
+          locationCubit.isGetRegion == false) {
+        locationCubit.getAllRegions();
+      }
+      // الحصول على الموقع الحالي
+      locationCubit.handlePermission().then((hasPermission) {
+        if (hasPermission) {
+          locationCubit.getCurrentPosition();
+        }
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     var locationCubit = LocationCubit.get(context);
     return BlocConsumer<LocationCubit, LocationState>(
@@ -91,7 +110,18 @@ class _SetLocationOnMapState extends State<SetLocationOnMap> {
                   ? const SizedBox()
                   : IconButton(
                       onPressed: () {
-                        widget.locationName.text = locationCubit.addressFromMap;
+                        // تحديث العنوان من الخريطة إذا كان متوفراً، وإلا استخدم العنوان الحالي
+                        if (locationCubit.addressFromMap.isNotEmpty) {
+                          widget.locationName.text =
+                              locationCubit.addressFromMap;
+                          locationCubit.locationTextController.text =
+                              locationCubit.addressFromMap;
+                        } else if (locationCubit.address.isNotEmpty) {
+                          widget.locationName.text = locationCubit.address;
+                          locationCubit.locationTextController.text =
+                              locationCubit.address;
+                        }
+
                         widget.cityName?.text =
                             locationCubit.cityTextController.text;
                         widget.areaName?.text =
@@ -107,8 +137,11 @@ class _SetLocationOnMapState extends State<SetLocationOnMap> {
                         print(
                             '<<<<<<<<<<<<<<<<<<<${widget.locationName.text}>>>>>>>>>>>>>>>>>>>>');
                         print('////////LATITUDE//$latAds');
-                        print('////////LATITUDE//$lngAds');
-                        if (widget.locationName.text.isEmpty) {
+                        print('////////LONGITUDE//$lngAds');
+                        print('////////CITY_ID//${locationCubit.cityId}');
+                        print('////////REGION_ID//${locationCubit.regionId}');
+                        if (widget.locationName.text.isEmpty ||
+                            (latAds == null || lngAds == null)) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text(LocaleKeys.setLocation.tr()),
                             backgroundColor: redColor,
@@ -129,10 +162,34 @@ class _SetLocationOnMapState extends State<SetLocationOnMap> {
               : Stack(
                   children: [
                     GoogleMap(
-                      mapType: MapType.hybrid,
-                      // onMapCreated: (googleController) {
-                      // // cubit.changeMapMode(googleController);
-                      // },
+                      mapType: MapType.normal,
+                      onMapCreated: (googleController) async {
+                        // تهيئة cameraPositions بالقيمة الأولية
+                        if (locationCubit.position != null) {
+                          cameraPositions = CameraPosition(
+                            target: LatLng(
+                              locationCubit.position!.latitude,
+                              locationCubit.position!.longitude,
+                            ),
+                            zoom: 16,
+                          );
+                          // الانتظار حتى يتم تحميل المناطق قبل استدعاء getLocationFromMap
+                          if (locationCubit.isGetRegion == null ||
+                              locationCubit.isGetRegion == false) {
+                            // الانتظار قليلاً حتى يتم تحميل المناطق
+                            await Future.delayed(
+                                const Duration(milliseconds: 500));
+                          }
+                          // استدعاء getLocationFromMap عند تحميل الخريطة لأول مرة
+                          if (widget.isEdit == true) {
+                            await locationCubit.getLocationFromMap(
+                                cameraPositions!, true);
+                          } else {
+                            await locationCubit.getLocationFromMap(
+                                cameraPositions!, false);
+                          }
+                        }
+                      },
                       onCameraMove: (CameraPosition cameraPosition) {
                         cameraPositions = cameraPosition;
                       },
@@ -141,12 +198,14 @@ class _SetLocationOnMapState extends State<SetLocationOnMap> {
                               locationCubit.position!.longitude),
                           zoom: 16),
                       onCameraIdle: () async {
-                        if (widget.isEdit == true) {
-                          await locationCubit.getLocationFromMap(
-                              cameraPositions, true);
-                        } else {
-                          await locationCubit.getLocationFromMap(
-                              cameraPositions, false);
+                        if (cameraPositions != null) {
+                          if (widget.isEdit == true) {
+                            await locationCubit.getLocationFromMap(
+                                cameraPositions!, true);
+                          } else {
+                            await locationCubit.getLocationFromMap(
+                                cameraPositions!, false);
+                          }
                         }
                       },
                       myLocationEnabled: true,

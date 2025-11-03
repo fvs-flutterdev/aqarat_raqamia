@@ -143,23 +143,43 @@ class ServicesCubit extends Cubit<ServicesState> {
     int? providerId,
   }) async {
     emit(RequestServicesLoadingState());
+    var locationCubit = context.read<LocationCubit>();
     print(
-        '<<<<<<<<<districtTextController<<<<<<<<<<${context.read<LocationCubit>().districtTextController.text}>>>>>>>>>>>>>>>>>>>>');
+        '<<<<<<<<<districtTextController<<<<<<<<<<${locationCubit.districtTextController.text}>>>>>>>>>>>>>>>>>>>>');
+    print(
+        '<<<<<<<<<regionTextController<<<<<<<<<<${locationCubit.regionTextController.text}>>>>>>>>>>>>>>>>>>>>');
+    print(
+        '<<<<<<<<<cityTextController<<<<<<<<<<${locationCubit.cityTextController.text}>>>>>>>>>>>>>>>>>>>>');
+    print(
+        '<<<<<<<<<locationTextController<<<<<<<<<<${locationCubit.locationTextController.text}>>>>>>>>>>>>>>>>>>>>');
+    print('<<<<<<<<<latAds<<<<<<<<<<$latAds>>>>>>>>>>>>>>>>>>>>');
+    print('<<<<<<<<<lngAds<<<<<<<<<<$lngAds>>>>>>>>>>>>>>>>>>>>');
+    print(
+        '<<<<<<<<<cityId<<<<<<<<<<${locationCubit.cityId}>>>>>>>>>>>>>>>>>>>>');
+    print(
+        '<<<<<<<<<regionId<<<<<<<<<<${locationCubit.regionId}>>>>>>>>>>>>>>>>>>>>');
+
     DioHelper.postData(
       url: BaseUrl.baseUrl + BaseUrl.RequestService,
       token: token,
       data: {
         "services_id": serviceId,
         "sub_services_id": subServiceId,
-        "country": context.read<LocationCubit>().districtTextController.text,
-        "locations": context.read<LocationCubit>().locationTextController.text,
-        "lan": lngAds ??
-            context.read<LocationCubit>().position?.longitude.toString(),
-        "lat": latAds ??
-            context.read<LocationCubit>().position?.latitude.toString(),
+        "country": locationCubit.regionTextController.text.isNotEmpty
+            ? locationCubit.regionTextController.text
+            : (locationCubit.districtTextController.text.isNotEmpty
+                ? locationCubit.districtTextController.text
+                : ''),
+        "locations": locationCubit.locationTextController.text.isNotEmpty
+            ? locationCubit.locationTextController.text
+            : (locationCubit.address.isNotEmpty ? locationCubit.address : ''),
+        "lan":
+            lngAds?.toString() ?? locationCubit.position?.longitude.toString(),
+        "lat":
+            latAds?.toString() ?? locationCubit.position?.latitude.toString(),
         "notes": notes,
         "photos": listBase64Images,
-        "city_id": context.read<LocationCubit>().cityId ?? 18,
+        "city_id": locationCubit.cityId ?? 18,
         "notify_to": providerId,
         // "image1": '${image1}',
         // "image2": image2 == null ? null : '${image2}',
