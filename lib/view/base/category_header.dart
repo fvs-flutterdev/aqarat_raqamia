@@ -1,26 +1,15 @@
 import 'dart:io';
+
 import 'package:aqarat_raqamia/utils/media_query_value.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:multi_select_flutter/chip_display/multi_select_chip_display.dart';
-import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
-import 'package:multi_select_flutter/util/multi_select_item.dart';
-import 'package:multi_select_flutter/util/multi_select_list_type.dart';
-import '../../bloc/add_real_ads/cubit.dart';
-import '../../bloc/add_real_ads/state.dart';
-import '../../bloc/region_cubit/cubit.dart';
-import '../../bloc/region_cubit/state.dart';
-import '../../translation/locale_keys.g.dart';
+
 import '../../utils/app_constant.dart';
 import '../../utils/dimention.dart';
 import '../../utils/images.dart';
 import '../../utils/text_style.dart';
 import 'back_button.dart';
-import 'custom_bottom_sheet.dart';
-import 'custom_drop_down.dart';
 import 'filter_widget_region_category.dart';
 
 class CategoryHeader extends StatelessWidget implements PreferredSizeWidget {
@@ -38,33 +27,36 @@ class CategoryHeader extends StatelessWidget implements PreferredSizeWidget {
 
   // double? bottomPadding;
 
-  CategoryHeader(
-      {super.key,
-      required this.title,
-      this.action,
-        this.isPadding=true,
-      //  this.isSearchMode=false,
-      this.searchWidget,
-      this.changeStatusSearch,
-      this.leading,
-      required this.onTap,
-      this.isFilter = true,
-      this.isFilterRegion = false,
-      this.scrollController,
-      // this.bottomPadding,
-      this.isProvider = false,
-
-      });
+  CategoryHeader({
+    super.key,
+    required this.title,
+    this.action,
+    this.isPadding = true,
+    //  this.isSearchMode=false,
+    this.searchWidget,
+    this.changeStatusSearch,
+    this.leading,
+    required this.onTap,
+    this.isFilter = true,
+    this.isFilterRegion = false,
+    this.scrollController,
+    // this.bottomPadding,
+    this.isProvider = false,
+  });
 
 // final _scrollController = ScrollController();
   @override
   // TODO: implement preferredSize
-  Size get preferredSize =>
-      Size(Dimensions.WEB_MAX_WIDTH, Platform.isWindows  ? 70 :isPadding==true?120.h: 170.h);
+  Size get preferredSize => Size(
+      Dimensions.WEB_MAX_WIDTH,
+      Platform.isWindows
+          ? 70
+          : isPadding == true
+              ? 125.h
+              : 175.h);
 
   @override
   Widget build(BuildContext context) {
-
     return AppBar(
       // systemOverlayStyle: SystemUiOverlayStyle(
       //   statusBarColor: whiteColor,
@@ -93,101 +85,103 @@ class CategoryHeader extends StatelessWidget implements PreferredSizeWidget {
                     height: context.height * 0.01,
                   ),
                   isFilterRegion == true
-                      ? FilterWidgetDropDown(scrollControllerFilter: scrollController!,)
-                  // Row(
-                  //         children: [
-                  //           BlocBuilder<RegionsCubit, RegionState>(
-                  //             builder: (context, state) {
-                  //               return regionCubit.isGetRegion == false ||
-                  //                       regionCubit.isGetRegion == null
-                  //                   ? SizedBox()
-                  //                   : Expanded(
-                  //                       child: CustomDropDown(
-                  //                           topPadding: 0.0,
-                  //                           items: regionCubit
-                  //                               .allRegionsModel.data!
-                  //                               .map((e) {
-                  //                             return DropdownMenuItem(
-                  //                               child: Text(e.name ?? ''),
-                  //                               value: e.regionId,
-                  //                             );
-                  //                           }).toList(),
-                  //                           value: regionCubit.regionIdFilter,
-                  //                           fct: (onChange) {
-                  //                             regionCubit
-                  //                                 .onChangeRegionIdFilter(
-                  //                                     onChange);
-                  //                             print(onChange);
-                  //                           },
-                  //                           hint: LocaleKeys.region.tr()),
-                  //                     );
-                  //             },
-                  //           ),
-                  //           SizedBox(
-                  //             width: context.width * 0.02.w,
-                  //           ),
-                  //           BlocBuilder<AddRealAdsCubit, AddRealAdsState>(
-                  //             builder: (context, state) {
-                  //               return addRealAdsCubit.isGetResourceFeature ==
-                  //                           false ||
-                  //                       addRealAdsCubit.isGetResourceFeature ==
-                  //                           null
-                  //                   ? SizedBox()
-                  //                   : Expanded(
-                  //                       child: CustomDropDown(
-                  //                           topPadding: 0.0,
-                  //                           items: addRealAdsCubit
-                  //                               .resourceCreateModel.adType!
-                  //                               .map((e) {
-                  //                             return DropdownMenuItem(
-                  //                               child: Text(e.name ?? ''),
-                  //                               value: e.id,
-                  //                             );
-                  //                           }).toList(),
-                  //                           value: addRealAdsCubit
-                  //                               .CategoryIdFilter,
-                  //                           fct: (onChange) {
-                  //                             addRealAdsCubit
-                  //                                 .onChangeCategoryIdFilter(
-                  //                                     onChange);
-                  //                             regionCubit.regionIdFilter == 0
-                  //                                 ? null
-                  //                                 : regionCubit
-                  //                                     .getCitiesByRegionId(
-                  //                                         context: context,
-                  //                                         page: 1,
-                  //                                         regionId: regionCubit
-                  //                                                 .regionIdFilter ??
-                  //                                             0)
-                  //                                     .then((value) {
-                  //                                     // if(regionCubit.regionId == 0){
-                  //                                     //   context.read<OrdersProviderCubit>().getPendingOrdersProvider(page: 1,context: context);
-                  //                                     // }else {
-                  //                                     CustomBottomSheet(
-                  //                                         context: context,
-                  //                                         regionFilter: regionCubit
-                  //                                                 .regionIdFilter ??
-                  //                                             0,
-                  //                                         controller:
-                  //                                             scrollController!,
-                  //                                         confirm: () {
-                  //                                           Navigator.pop(
-                  //                                               context);
-                  //                                           // orderProviderCubit
-                  //                                           //     .getPendingOrdersProvider(
-                  //                                           //     page: 1,
-                  //                                           //     context: context);
-                  //                                         });
-                  //                                     //}
-                  //                                   });
-                  //                             print(onChange);
-                  //                           },
-                  //                           hint: 'نوع العقار'),
-                  //                     );
-                  //             },
-                  //           ),
-                  //         ],
-                  //       )
+                      ? FilterWidgetDropDown(
+                          scrollControllerFilter: scrollController!,
+                        )
+                      // Row(
+                      //         children: [
+                      //           BlocBuilder<RegionsCubit, RegionState>(
+                      //             builder: (context, state) {
+                      //               return regionCubit.isGetRegion == false ||
+                      //                       regionCubit.isGetRegion == null
+                      //                   ? SizedBox()
+                      //                   : Expanded(
+                      //                       child: CustomDropDown(
+                      //                           topPadding: 0.0,
+                      //                           items: regionCubit
+                      //                               .allRegionsModel.data!
+                      //                               .map((e) {
+                      //                             return DropdownMenuItem(
+                      //                               child: Text(e.name ?? ''),
+                      //                               value: e.regionId,
+                      //                             );
+                      //                           }).toList(),
+                      //                           value: regionCubit.regionIdFilter,
+                      //                           fct: (onChange) {
+                      //                             regionCubit
+                      //                                 .onChangeRegionIdFilter(
+                      //                                     onChange);
+                      //                             print(onChange);
+                      //                           },
+                      //                           hint: LocaleKeys.region.tr()),
+                      //                     );
+                      //             },
+                      //           ),
+                      //           SizedBox(
+                      //             width: context.width * 0.02.w,
+                      //           ),
+                      //           BlocBuilder<AddRealAdsCubit, AddRealAdsState>(
+                      //             builder: (context, state) {
+                      //               return addRealAdsCubit.isGetResourceFeature ==
+                      //                           false ||
+                      //                       addRealAdsCubit.isGetResourceFeature ==
+                      //                           null
+                      //                   ? SizedBox()
+                      //                   : Expanded(
+                      //                       child: CustomDropDown(
+                      //                           topPadding: 0.0,
+                      //                           items: addRealAdsCubit
+                      //                               .resourceCreateModel.adType!
+                      //                               .map((e) {
+                      //                             return DropdownMenuItem(
+                      //                               child: Text(e.name ?? ''),
+                      //                               value: e.id,
+                      //                             );
+                      //                           }).toList(),
+                      //                           value: addRealAdsCubit
+                      //                               .CategoryIdFilter,
+                      //                           fct: (onChange) {
+                      //                             addRealAdsCubit
+                      //                                 .onChangeCategoryIdFilter(
+                      //                                     onChange);
+                      //                             regionCubit.regionIdFilter == 0
+                      //                                 ? null
+                      //                                 : regionCubit
+                      //                                     .getCitiesByRegionId(
+                      //                                         context: context,
+                      //                                         page: 1,
+                      //                                         regionId: regionCubit
+                      //                                                 .regionIdFilter ??
+                      //                                             0)
+                      //                                     .then((value) {
+                      //                                     // if(regionCubit.regionId == 0){
+                      //                                     //   context.read<OrdersProviderCubit>().getPendingOrdersProvider(page: 1,context: context);
+                      //                                     // }else {
+                      //                                     CustomBottomSheet(
+                      //                                         context: context,
+                      //                                         regionFilter: regionCubit
+                      //                                                 .regionIdFilter ??
+                      //                                             0,
+                      //                                         controller:
+                      //                                             scrollController!,
+                      //                                         confirm: () {
+                      //                                           Navigator.pop(
+                      //                                               context);
+                      //                                           // orderProviderCubit
+                      //                                           //     .getPendingOrdersProvider(
+                      //                                           //     page: 1,
+                      //                                           //     context: context);
+                      //                                         });
+                      //                                     //}
+                      //                                   });
+                      //                             print(onChange);
+                      //                           },
+                      //                           hint: 'نوع العقار'),
+                      //                     );
+                      //             },
+                      //           ),
+                      //         ],
+                      //       )
                       : SizedBox(),
                 ],
               ))
@@ -270,7 +264,9 @@ class CategoryHeader extends StatelessWidget implements PreferredSizeWidget {
                     height: context.height * 0.02,
                   ),
                   isFilterRegion == true
-                      ? FilterWidgetDropDown(scrollControllerFilter: scrollController!,)
+                      ? FilterWidgetDropDown(
+                          scrollControllerFilter: scrollController!,
+                        )
                       : SizedBox(),
                 ],
               ),
