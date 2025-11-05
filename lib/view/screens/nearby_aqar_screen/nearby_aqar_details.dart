@@ -485,18 +485,28 @@ class _NearbyAqarScreenState extends State<NearbyAqarScreen> {
                                                   ));
                                                   // Get.to(() => );
                                                 },
-                                                image: nearbyAqarCubit
-                                                        .nearbyAqarModel
-                                                        .data![index]
-                                                        .photos!
-                                                        .isEmpty
-                                                    ? '${Images.AVATAR_IMAGE}'
-                                                    : nearbyAqarCubit
+                                                image: (nearbyAqarCubit
                                                             .nearbyAqarModel
                                                             .data![index]
-                                                            .photos
-                                                            ?.first ??
-                                                        '',
+                                                            .photos == null ||
+                                                        nearbyAqarCubit
+                                                            .nearbyAqarModel
+                                                            .data![index]
+                                                            .photos!
+                                                            .isEmpty)
+                                                    ? '${Images.AVATAR_IMAGE}'
+                                                    : (nearbyAqarCubit
+                                                            .nearbyAqarModel
+                                                            .data![index]
+                                                            .photos!
+                                                            .first
+                                                            .isEmpty
+                                                        ? '${Images.AVATAR_IMAGE}'
+                                                        : nearbyAqarCubit
+                                                                .nearbyAqarModel
+                                                                .data![index]
+                                                                .photos!
+                                                                .first),
                                                 child: Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,

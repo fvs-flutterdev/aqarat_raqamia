@@ -136,7 +136,15 @@ class Data {
     status = json['status'];
     lan = json['lan'];
     lat = json['lat'];
-    photos = json['photos'].cast<String>();
+    if (json['photos'] != null) {
+      photos = (json['photos'] as List)
+          .map((e) => e?.toString())
+          .where((e) => e != null && e.isNotEmpty)
+          .cast<String>()
+          .toList();
+    } else {
+      photos = null;
+    }
     isFavorite = json['is_favorite'];
     usage = json['usage'];
     area = json['area'];
