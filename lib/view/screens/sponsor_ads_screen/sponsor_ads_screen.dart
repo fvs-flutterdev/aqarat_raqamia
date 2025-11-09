@@ -4,20 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../../bloc/ads_by_id_cubit/cubit.dart';
+import '../../../bloc/promoted_services_cubit/cubit.dart';
+import '../../../bloc/promoted_services_cubit/state.dart';
 import '../../../bloc/sponsor_ads_cubit/cubit.dart';
 import '../../../bloc/sponsor_ads_cubit/state.dart';
+import '../../../translation/locale_keys.g.dart';
 import '../../../utils/dimention.dart';
+import '../../../utils/images.dart';
 import '../../../utils/media_query_value.dart';
 import '../../../utils/text_style.dart';
 import '../../../view/base/lunch_widget.dart';
 import '../../../view/error_widget/error_widget.dart';
 import '../../../view/screens/filter/filter_screen.dart';
 import '../../../view/screens/location/ads_on_map.dart';
-import '../../../bloc/ads_by_id_cubit/cubit.dart';
-import '../../../bloc/promoted_services_cubit/cubit.dart';
-import '../../../bloc/promoted_services_cubit/state.dart';
-import '../../../translation/locale_keys.g.dart';
-import '../../../utils/images.dart';
 import '../../base/category_header.dart';
 import '../../base/main_button.dart';
 import '../../base/pagination_view.dart';
@@ -25,7 +26,6 @@ import '../../base/riyal_widget.dart';
 import '../../base/shimmer/ads_shimmer.dart';
 import '../details_screen/aqar_details_screen.dart';
 import '../details_screen/widget/similar_ads.dart';
-import '../favourites/widget/favourite_widget.dart';
 import '../promoted/widget/promoted_provider_body.dart';
 
 class SponsorAdsScreen extends StatefulWidget {
@@ -286,10 +286,11 @@ class _SponsorAdsScreenState extends State<SponsorAdsScreen> {
                                                             style: openSansMedium
                                                                 .copyWith(
                                                                     color:
-                                                                        goldColor))
-
-                                                        ,
-                                                        SizedBox(width: context.width*0.005.w,),
+                                                                        goldColor)),
+                                                        SizedBox(
+                                                          width: context.width *
+                                                              0.005.w,
+                                                        ),
                                                         riyalWidget(context),
                                                       ],
                                                     )

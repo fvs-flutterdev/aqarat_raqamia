@@ -1,4 +1,12 @@
 import 'package:aqarat_raqamia/bloc/region_cubit/cubit.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 import '../../../../../bloc/nearby_aqar_cubit/cubit.dart';
 import '../../../../../bloc/nearby_aqar_cubit/state.dart';
 import '../../../../../utils/dimention.dart';
@@ -24,13 +32,6 @@ import '../../base/shimmer/ads_shimmer.dart';
 import '../details_screen/aqar_details_screen.dart';
 import '../details_screen/widget/similar_ads.dart';
 import '../promoted/widget/promoted_provider_body.dart';
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class NearbyAqarScreen extends StatefulWidget {
   int id;
@@ -486,9 +487,10 @@ class _NearbyAqarScreenState extends State<NearbyAqarScreen> {
                                                   // Get.to(() => );
                                                 },
                                                 image: (nearbyAqarCubit
-                                                            .nearbyAqarModel
-                                                            .data![index]
-                                                            .photos == null ||
+                                                                .nearbyAqarModel
+                                                                .data![index]
+                                                                .photos ==
+                                                            null ||
                                                         nearbyAqarCubit
                                                             .nearbyAqarModel
                                                             .data![index]
@@ -503,10 +505,10 @@ class _NearbyAqarScreenState extends State<NearbyAqarScreen> {
                                                             .isEmpty
                                                         ? '${Images.AVATAR_IMAGE}'
                                                         : nearbyAqarCubit
-                                                                .nearbyAqarModel
-                                                                .data![index]
-                                                                .photos!
-                                                                .first),
+                                                            .nearbyAqarModel
+                                                            .data![index]
+                                                            .photos!
+                                                            .first),
                                                 child: Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
@@ -540,8 +542,12 @@ class _NearbyAqarScreenState extends State<NearbyAqarScreen> {
                                                                       .copyWith(
                                                                           color:
                                                                               goldColor)),
-                                                              SizedBox(width:context.width*0.005.w),
-                                                              riyalWidget(context),
+                                                              SizedBox(
+                                                                  width: context
+                                                                          .width *
+                                                                      0.005.w),
+                                                              riyalWidget(
+                                                                  context),
                                                             ],
                                                           )
                                                         ],
@@ -892,9 +898,10 @@ class _NearbyAqarScreenState extends State<NearbyAqarScreen> {
                                                     .isEmpty) {
                                                   return Center(
                                                     child: Text(
-                                                      LocaleKeys
-                                                          .noServiceProvider
-                                                          .tr(),
+                                                      '',
+                                                      // LocaleKeys
+                                                      //     .noServiceProvider
+                                                      //     .tr(),
                                                       style:
                                                           openSansBold.copyWith(
                                                               color: goldColor),
@@ -1186,16 +1193,20 @@ class _NearbyAqarScreenState extends State<NearbyAqarScreen> {
                                         //   ),
                                         // )
                                         : const SizedBox(),
-                                 widget.id==2?SizedBox():   Padding(
-                                      padding: const EdgeInsets.all(
-                                          Dimensions.PADDING_SIZE_EXTRA_LARGE),
-                                      child: CustomButton(
-                                          textButton: LocaleKeys.onMap.tr(),
-                                          onPressed: () {
-                                            navigateForward(AdsOnMap());
-                                          },
-                                          color: darkGreyColor),
-                                    ),
+                                    widget.id == 2
+                                        ? SizedBox()
+                                        : Padding(
+                                            padding: const EdgeInsets.all(
+                                                Dimensions
+                                                    .PADDING_SIZE_EXTRA_LARGE),
+                                            child: CustomButton(
+                                                textButton:
+                                                    LocaleKeys.onMap.tr(),
+                                                onPressed: () {
+                                                  navigateForward(AdsOnMap());
+                                                },
+                                                color: darkGreyColor),
+                                          ),
                                   ],
                                 ),
                               ),

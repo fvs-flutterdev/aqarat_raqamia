@@ -1,15 +1,14 @@
 import 'package:aqarat_raqamia/utils/media_query_value.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../translation/locale_keys.g.dart';
 import '../../../../../view/base/auth_header.dart';
 import '../../../../../view/base/shimmer/ads_shimmer.dart';
 import '../../../../../view/error_widget/error_widget.dart';
 import '../../../../../view/screens/promoted/widget/promoted_provider_body.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../bloc/promoted_services_cubit/cubit.dart';
 import '../../../bloc/promoted_services_cubit/state.dart';
 import '../../../utils/text_style.dart';
