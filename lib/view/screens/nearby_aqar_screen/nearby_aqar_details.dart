@@ -898,7 +898,7 @@ class _NearbyAqarScreenState extends State<NearbyAqarScreen> {
                                                     .isEmpty) {
                                                   return Center(
                                                     child: Text(
-                                                      '',
+                                                      '', //allow
                                                       // LocaleKeys
                                                       //     .noServiceProvider
                                                       //     .tr(),
