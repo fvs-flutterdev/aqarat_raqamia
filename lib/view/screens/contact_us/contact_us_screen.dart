@@ -1,18 +1,17 @@
-import 'package:flutter/cupertino.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../bloc/setting_cubit/contact_us_cubit/cubit.dart';
+import '../../../bloc/setting_cubit/contact_us_cubit/state.dart';
+import '../../../translation/locale_keys.g.dart';
 import '../../../utils/dimention.dart';
 import '../../../utils/images.dart';
 import '../../../utils/media_query_value.dart';
 import '../../../view/base/auth_header.dart';
 import '../../../view/error_widget/error_widget.dart';
 import '../../../view/screens/contact_us/widget/contact_us_widget.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../bloc/setting_cubit/contact_us_cubit/cubit.dart';
-import '../../../bloc/setting_cubit/contact_us_cubit/state.dart';
-import '../../../translation/locale_keys.g.dart';
 import '../../base/lunch_widget.dart';
 import '../../base/shimmer/contact_us_shimmer.dart';
 
@@ -44,16 +43,16 @@ class ContactUsScreen extends StatelessWidget {
                         contactUsCubit.getContactInfo();
                       })
                     : Padding(
-                        padding:
-                            const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+                        padding: const EdgeInsets.all(
+                            Dimensions.PADDING_SIZE_DEFAULT),
                         child: Column(
                           children: [
                             ContactUsWidget(
                               fct: () {
                                 launchCall(
                                     context: context,
-                                    phoneNumber: contactUsCubit
-                                            .contactUsModel.data?.content?.phone ??
+                                    phoneNumber: contactUsCubit.contactUsModel
+                                            .data?.content?.phone ??
                                         '');
                               },
                               contactInfo: LocaleKeys.phoneCall.tr(),
@@ -66,8 +65,8 @@ class ContactUsScreen extends StatelessWidget {
                               fct: () {
                                 launchWhatsapp(
                                   context: context,
-                                  phone: contactUsCubit
-                                          .contactUsModel.data?.content?.whatsApp ??
+                                  phone: contactUsCubit.contactUsModel.data
+                                          ?.content?.whatsApp ??
                                       '',
                                 );
                               },
@@ -81,8 +80,8 @@ class ContactUsScreen extends StatelessWidget {
                               fct: () {
                                 navigateToMail(
                                     context: context,
-                                    mail: contactUsCubit
-                                            .contactUsModel.data?.content?.mail ??
+                                    mail: contactUsCubit.contactUsModel.data
+                                            ?.content?.mail ??
                                         '');
                               },
                               contactInfo: LocaleKeys.email.tr(),
@@ -93,8 +92,8 @@ class ContactUsScreen extends StatelessWidget {
                             ),
                             ContactUsWidget(
                               fct: () {
-                                launchUrlSocial(contactUsCubit
-                                        .contactUsModel.data?.content?.facebook ??
+                                launchUrlSocial(contactUsCubit.contactUsModel
+                                        .data?.content?.facebook ??
                                     '');
                                 // navigateToMail(context: context, mail: contactUsCubit
                                 //     .contactUsModel.data?.content?.mail ??
@@ -108,8 +107,8 @@ class ContactUsScreen extends StatelessWidget {
                             ),
                             ContactUsWidget(
                               fct: () {
-                                launchUrlSocial(contactUsCubit
-                                        .contactUsModel.data?.content?.instagram ??
+                                launchUrlSocial(contactUsCubit.contactUsModel
+                                        .data?.content?.instagram ??
                                     '');
                                 // navigateToMail(context: context, mail: contactUsCubit
                                 //     .contactUsModel.data?.content?.mail ??
@@ -123,8 +122,8 @@ class ContactUsScreen extends StatelessWidget {
                             ),
                             ContactUsWidget(
                               fct: () {
-                                launchUrlSocial(contactUsCubit
-                                        .contactUsModel.data?.content?.twitter ??
+                                launchUrlSocial(contactUsCubit.contactUsModel
+                                        .data?.content?.twitter ??
                                     '');
                                 // navigateToMail(context: context, mail: contactUsCubit
                                 //     .contactUsModel.data?.content?.mail ??
