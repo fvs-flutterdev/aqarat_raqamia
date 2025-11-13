@@ -199,7 +199,7 @@ class StyleBottomNavBarWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               AnimatedContainer(
-                height: 50,
+                height: 44,
                 duration: Duration(milliseconds: 200),
                 padding: EdgeInsets.all(isSelected ? 8.0 : 6.0),
                 decoration: BoxDecoration(
@@ -208,14 +208,17 @@ class StyleBottomNavBarWidget extends StatelessWidget {
                       : Colors.transparent,
                   borderRadius: BorderRadius.circular(12.0),
                 ),
-                child: IconTheme(
-                  data: IconThemeData(
-                    size: (item.iconSize ?? 22.0) + (isSelected ? 2.0 : 0.0),
-                    color: isSelected
-                        ? item.activeForegroundColor
-                        : item.inactiveForegroundColor,
+                child: InkWell(
+                  onTap: onTap,
+                  child: IconTheme(
+                    data: IconThemeData(
+                      size: (item.iconSize ?? 22.0) + (isSelected ? 2.0 : 0.0),
+                      color: isSelected
+                          ? item.activeForegroundColor
+                          : item.inactiveForegroundColor,
+                    ),
+                    child: isSelected ? item.icon : item.inactiveIcon,
                   ),
-                  child: isSelected ? item.icon : item.inactiveIcon,
                 ),
               ),
               if (item.title != null)
@@ -254,27 +257,41 @@ class StyleBottomNavBarWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          AnimatedContainer(
-            duration: Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-            child: FloatingActionButton(
-              onPressed: () {
-                navBarConfig.onItemSelected(
-                  (navBarConfig.items.length / 2).floor(),
-                );
-              },
-              elevation: isSelected ? 8.0 : 6.0,
-              backgroundColor: item.activeForegroundColor,
-              heroTag: "middleNavButton",
-              child: AnimatedSwitcher(
-                duration: Duration(milliseconds: 200),
-                child: IconTheme(
-                  key: ValueKey(isSelected),
-                  data: IconThemeData(
-                    size: item.iconSize ?? 24.0,
-                    color: item.inactiveForegroundColor,
+          InkWell(
+            onTap: () {
+              navBarConfig.onItemSelected(
+                (navBarConfig.items.length / 2).floor(),
+              );
+            },
+            child: AnimatedContainer(
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              child: FloatingActionButton(
+                onPressed: () {
+                  navBarConfig.onItemSelected(
+                    (navBarConfig.items.length / 2).floor(),
+                  );
+                },
+                elevation: isSelected ? 8.0 : 6.0,
+                backgroundColor: item.activeForegroundColor,
+                heroTag: "middleNavButton",
+                child: AnimatedSwitcher(
+                  duration: Duration(milliseconds: 200),
+                  child: InkWell(
+                    onTap: () {
+                      navBarConfig.onItemSelected(
+                        (navBarConfig.items.length / 2).floor(),
+                      );
+                    },
+                    child: IconTheme(
+                      key: ValueKey(isSelected),
+                      data: IconThemeData(
+                        size: item.iconSize ?? 24.0,
+                        color: item.inactiveForegroundColor,
+                      ),
+                      child: isSelected ? item.icon : item.inactiveIcon,
+                    ),
                   ),
-                  child: isSelected ? item.icon : item.inactiveIcon,
                 ),
               ),
             ),
@@ -363,7 +380,7 @@ class StyleBottomNavBarWidget extends StatelessWidget {
           ),
           // Floating Action Button in the middle
           Positioned(
-            bottom: 10,
+            bottom: 30,
             left: 0,
             right: 0,
             child: Center(
