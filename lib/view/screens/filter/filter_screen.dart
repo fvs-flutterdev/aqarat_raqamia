@@ -107,7 +107,10 @@ class _FilterScreenState extends State<FilterScreen> {
 //                         return
 //                       },
 //                     ),
-                        state is GetPriceRangeLoadingState
+                        (state is GetPriceRangeLoadingState ||
+                                filterSearchAdsCubit.priceRangeModel?.data ==
+                                    null ||
+                                filterSearchAdsCubit.values == null)
                             ? const SizedBox()
                             : Column(
                                 children: [
@@ -116,10 +119,10 @@ class _FilterScreenState extends State<FilterScreen> {
                                     child: RangeSlider(
                                       activeColor: goldColor,
                                       max: filterSearchAdsCubit
-                                          .priceRangeModel.data!.maxPrice!
+                                          .priceRangeModel!.data!.maxPrice!
                                           .toDouble(),
                                       min: filterSearchAdsCubit
-                                          .priceRangeModel.data!.minPrice!
+                                          .priceRangeModel!.data!.minPrice!
                                           .toDouble(),
                                       values: filterSearchAdsCubit.values!,
                                       onChanged: (newVal) {
@@ -218,7 +221,7 @@ class _FilterScreenState extends State<FilterScreen> {
                                   page: 1,
                                   categoryId: filterSearchAdsCubit.categoryId,
                                   adsType: addRealAdsCubit.purposeId ?? '',
-                                  space: areaController.text ?? '');
+                                  space: areaController.text);
                               // Navigator.pop(context);
                               navigateForwardReplace(CategoryScreen(
                                 //   model:filterSearchAdsCubit.searchResultModel ,

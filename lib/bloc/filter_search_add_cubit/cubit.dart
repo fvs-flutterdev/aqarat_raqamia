@@ -14,7 +14,7 @@ class FilterSearchAdsCubit extends Cubit<FilterSearchAdsState> {
   FilterSearchAdsCubit() : super(InitialFilterSearchAdsState());
 
   static FilterSearchAdsCubit get(context) => BlocProvider.of(context);
-  late PriceRangeModel priceRangeModel;
+  PriceRangeModel? priceRangeModel;
   RangeValues? values;
 
   getPriceRange() {
@@ -23,11 +23,13 @@ class FilterSearchAdsCubit extends Cubit<FilterSearchAdsState> {
         .then((val) async {
       print("///////////////////////${val.toString()}");
       priceRangeModel = PriceRangeModel.fromJson(val.data);
-
       emit(GetPriceRangeSuccessState());
       await Future.delayed(Duration.zero);
-      values = RangeValues(priceRangeModel.data!.minPrice!.toDouble(),
-          priceRangeModel.data!.maxPrice!.toDouble());
+      final data = priceRangeModel?.data;
+      if (data?.minPrice != null && data?.maxPrice != null) {
+        values =
+            RangeValues(data!.minPrice!.toDouble(), data.maxPrice!.toDouble());
+      }
     }).catchError((error) {
       emit(GetPriceRangeErrorState(error: error.toString()));
     });
@@ -181,8 +183,11 @@ class FilterSearchAdsCubit extends Cubit<FilterSearchAdsState> {
   }
 
   returnRangeValueDefault() {
-    values = RangeValues(priceRangeModel.data!.minPrice!.toDouble(),
-        priceRangeModel.data!.maxPrice!.toDouble());
+    final data = priceRangeModel?.data;
+    if (data?.minPrice != null && data?.maxPrice != null) {
+      values =
+          RangeValues(data!.minPrice!.toDouble(), data.maxPrice!.toDouble());
+    }
     startVal = null;
     endVal = null;
     emit(AddCategoryToFavouriteSuccessState());
