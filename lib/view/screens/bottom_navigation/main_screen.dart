@@ -77,6 +77,7 @@ class _MainScreenNavigationState extends State<MainScreenNavigation> {
 
       body: UpgradeAlert(
         upgrader: Upgrader(
+
             // languageCode: myLocale.toString(),
             // debugDisplayAlways: true,
             // storeController: UpgraderStoreController(
@@ -191,6 +192,7 @@ class StyleBottomNavBarWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.0),
         splashColor: item.activeForegroundColor.withOpacity(0.1),
         child: AnimatedContainer(
+          color: Colors.transparent,
           duration: Duration(milliseconds: 200),
           curve: Curves.easeInOut,
           padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
@@ -344,7 +346,7 @@ class StyleBottomNavBarWidget extends StatelessWidget {
               decoration: navBarDecoration,
               height: height,
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+                padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.end,
