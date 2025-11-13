@@ -71,7 +71,7 @@ class CategoryHeader extends StatelessWidget implements PreferredSizeWidget {
           context.height * 0.01.sp,
       flexibleSpace: SafeArea(
         minimum: EdgeInsets.only(
-            top: context.height * 0.06.sp,
+            top: context.height * 0.05.sp,
             right: Dimensions.PADDING_SIZE_SMALL.sp,
             left: Dimensions.PADDING_SIZE_SMALL.sp,
             bottom: context.height * 0.03.sp),
