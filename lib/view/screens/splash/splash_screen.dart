@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
-    navigateForwardReplace(MainScreenNavigation()); //TODO: remove this
+    // navigateForwardReplace(MainScreenNavigation()); //TODO: remove this
     _controller =
         AnimationController(vsync: this, duration: const Duration(seconds: 3));
     _animation =

@@ -6,6 +6,7 @@ import 'package:aqarat_raqamia/utils/shared_pref.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restart_app/restart_app.dart';
+
 import '../../../view/base/lunch_widget.dart';
 import '../../../view/screens/splash/splash_screen.dart';
 
@@ -15,17 +16,17 @@ class LogoutCubit extends Cubit<LogoutState> {
   logout(BuildContext context) {
     emit(LogOutLoadingState());
     DioHelper.postData(url: BaseUrl.baseUrl + BaseUrl.logout, token: token)
-        .then((value)async {
+        .then((value) async {
       print(value.data);
       await CacheHelper.sharedPreferences.clear();
       await CacheHelper.removeData();
       token = null;
       userId = null;
-      accountType=null;
-      isProviderSubscribed=null;
+      accountType = null;
+      isProviderSubscribed = null;
       emit(LogOutSuccessState());
       print('<<<<<<<<<<<<<<<<<<<<<<<<<$token>>>>>>>>>>>>>>>>>>>>>>>>>');
-    //  Phoenix.rebirth(context);
+      //  Phoenix.rebirth(context);
       Restart.restartApp().then((value) => navigateAndRemove(SplashScreen()));
       // RestartWidget.restartApp(context);
       // navigateAndRemove(SplashScreen());
