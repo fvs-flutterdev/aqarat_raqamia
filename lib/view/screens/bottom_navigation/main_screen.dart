@@ -180,63 +180,73 @@ class StyleBottomNavBarWidget extends StatelessWidget {
   final double? height;
   final double middleItemSize;
 
-  Widget _buildItem(BuildContext context, ItemConfig item, bool isSelected) =>
-      AnimatedContainer(
-        duration: Duration(milliseconds: 200),
-        curve: Curves.easeInOut,
-        padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            AnimatedContainer(
-              height: 50,
-              duration: Duration(milliseconds: 200),
-              padding: EdgeInsets.all(isSelected ? 8.0 : 6.0),
-              decoration: BoxDecoration(
-                color: isSelected
-                    ? item.activeForegroundColor.withOpacity(0.1)
-                    : Colors.transparent,
-                borderRadius: BorderRadius.circular(12.0),
-              ),
-              child: IconTheme(
-                data: IconThemeData(
-                  size: (item.iconSize ?? 22.0) + (isSelected ? 2.0 : 0.0),
+  Widget _buildItem(
+    BuildContext context,
+    ItemConfig item,
+    bool isSelected,
+    VoidCallback onTap,
+  ) =>
+      InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(16.0),
+        splashColor: item.activeForegroundColor.withOpacity(0.1),
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: 200),
+          curve: Curves.easeInOut,
+          padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              AnimatedContainer(
+                height: 50,
+                duration: Duration(milliseconds: 200),
+                padding: EdgeInsets.all(isSelected ? 8.0 : 6.0),
+                decoration: BoxDecoration(
                   color: isSelected
-                      ? item.activeForegroundColor
-                      : item.inactiveForegroundColor,
+                      ? item.activeForegroundColor.withOpacity(0.1)
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(12.0),
                 ),
-                child: isSelected ? item.icon : item.inactiveIcon,
+                child: IconTheme(
+                  data: IconThemeData(
+                    size: (item.iconSize ?? 22.0) + (isSelected ? 2.0 : 0.0),
+                    color: isSelected
+                        ? item.activeForegroundColor
+                        : item.inactiveForegroundColor,
+                  ),
+                  child: isSelected ? item.icon : item.inactiveIcon,
+                ),
               ),
-            ),
-            if (item.title != null)
-              Padding(
-                padding: EdgeInsets.only(top: 4.0),
-                child: AnimatedDefaultTextStyle(
-                  duration: Duration(milliseconds: 200),
-                  style: item.textStyle.apply(
-                        color: isSelected
-                            ? item.activeForegroundColor
-                            : item.inactiveForegroundColor,
-                        fontSizeFactor: isSelected ? 1.0 : 0.9,
-                      ) ??
-                      TextStyle(
-                        fontSize: isSelected ? 11.0 : 10.0,
-                        fontWeight:
-                            isSelected ? FontWeight.w600 : FontWeight.normal,
-                        color: isSelected
-                            ? item.activeForegroundColor
-                            : item.inactiveForegroundColor,
-                      ),
-                  child: Text(
-                    item.title!,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
+              if (item.title != null)
+                Padding(
+                  padding: EdgeInsets.only(top: 4.0),
+                  child: AnimatedDefaultTextStyle(
+                    duration: Duration(milliseconds: 200),
+                    style: item.textStyle.apply(
+                          color: isSelected
+                              ? item.activeForegroundColor
+                              : item.inactiveForegroundColor,
+                          fontSizeFactor: isSelected ? 1.0 : 0.9,
+                        ) ??
+                        TextStyle(
+                          fontSize: isSelected ? 11.0 : 10.0,
+                          fontWeight:
+                              isSelected ? FontWeight.w600 : FontWeight.normal,
+                          color: isSelected
+                              ? item.activeForegroundColor
+                              : item.inactiveForegroundColor,
+                        ),
+                    child: Text(
+                      item.title!,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
-              ),
-          ],
+            ],
+          ),
         ),
       );
 
@@ -303,7 +313,7 @@ class StyleBottomNavBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final midIndex = (navBarConfig.items.length / 2).floor();
     return SizedBox(
-      height: height ?? 75.0,
+      height: height ?? 60.0,
       child: Stack(
         clipBehavior: Clip.none,
         alignment: Alignment.bottomCenter,
@@ -336,16 +346,13 @@ class StyleBottomNavBarWidget extends StatelessWidget {
                     return Expanded(
                       child: Material(
                         color: Colors.transparent,
-                        child: InkWell(
-                          onTap: () {
+                        child: _buildItem(
+                          context,
+                          item,
+                          navBarConfig.selectedIndex == index,
+                          () {
                             navBarConfig.onItemSelected(index);
                           },
-                          borderRadius: BorderRadius.circular(16.0),
-                          child: _buildItem(
-                            context,
-                            item,
-                            navBarConfig.selectedIndex == index,
-                          ),
                         ),
                       ),
                     );
@@ -356,7 +363,7 @@ class StyleBottomNavBarWidget extends StatelessWidget {
           ),
           // Floating Action Button in the middle
           Positioned(
-            top: -middleItemSize / 2 - 8,
+            bottom: 10,
             left: 0,
             right: 0,
             child: Center(
