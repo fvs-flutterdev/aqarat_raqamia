@@ -14,10 +14,10 @@ import '../../../utils/app_constant.dart';
 import '../../../utils/images.dart';
 import '../../../utils/shared_pref.dart';
 import '../../../view/base/lunch_widget.dart';
-import '../../../view/screens/boarding/boarding_screen.dart';
 import '../../../view/screens/bottom_navigation/main_screen.dart';
 import '../../../view/screens/network_error_screen/network_error.dart';
 import '../biometrics_auth/verify_bio_auth_code.dart';
+import '../boarding/boarding_screen.dart';
 import '../subscribtion_screen/packages_screen.dart';
 
 class SplashScreen extends StatefulWidget {

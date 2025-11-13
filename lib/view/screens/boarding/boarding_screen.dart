@@ -17,11 +17,20 @@ import '../../../utils/dimention.dart';
 import '../../../utils/images.dart';
 import '../account_type/account_type.dart';
 
-class BoardingScreen extends StatelessWidget {
+class BoardingScreen extends StatefulWidget {
+  @override
+  State<BoardingScreen> createState() => _BoardingScreenState();
+}
+
+class _BoardingScreenState extends State<BoardingScreen> {
   final PageController _pageController = PageController();
+  @override
+  void initState() {
+    super.initState();
+    context.read<StartAppCubit>().getBoardingData();
+  }
 
   // BoardingScreen({Key key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     var startAppCubit = context.read<StartAppCubit>();
@@ -36,10 +45,35 @@ class BoardingScreen extends StatelessWidget {
               return bardingSuccessWidget(
                   pageController: _pageController,
                   startAppCubit: startAppCubit);
+            } else if (state is GetBoardingDataLoadingState) {
+              return Center(
+                child: CircularProgressIndicator(
+                  color: goldColor,
+                  strokeWidth: 4,
+                ),
+              );
             } else {
-              return CircularProgressIndicator(
-                color: goldColor,
-                strokeWidth: 4,
+              return Center(
+                child: Column(
+                  children: [
+                    SizedBox(height: 100),
+                    Image.asset(Images.Error),
+                    Text(LocaleKeys.networkError.tr()),
+                    TextButton(
+                      onPressed: () {
+                        startAppCubit.getBoardingData();
+                      },
+                      child: Text(
+                        LocaleKeys.reload.tr(),
+                        style: openSansBlack.copyWith(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                          color: darkGreyColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               );
             }
           },
