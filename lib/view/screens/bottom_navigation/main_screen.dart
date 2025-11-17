@@ -133,7 +133,7 @@ class _MainScreenNavigationState extends State<MainScreenNavigation> {
                       // }
                     },
 
-                    tabs: accountType == 'service_provider'
+                    tabs: accountType != 'service_provider'
                         ? navBarCubit.providersItems()
                         : navBarCubit.clientItems(),
                     // tabs:

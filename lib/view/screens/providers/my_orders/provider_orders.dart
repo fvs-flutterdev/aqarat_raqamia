@@ -1,4 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../bloc/provider_orders_cubit/provider_current_orders/state.dart';
 import '../../../../../bloc/provider_orders_cubit/provider_old_orders_cubit/state.dart';
@@ -8,12 +11,7 @@ import '../../../../../utils/media_query_value.dart';
 import '../../../../../view/screens/providers/my_orders/tabs_screen/current.dart';
 import '../../../../../view/screens/providers/my_orders/tabs_screen/new.dart';
 import '../../../../../view/screens/providers/my_orders/tabs_screen/previous.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../bloc/auth_cubit/auth_provider/cubit.dart';
-import '../../../../bloc/auth_cubit/auth_provider/state.dart';
 import '../../../../bloc/provider_orders_cubit/cubit.dart';
 import '../../../../bloc/provider_orders_cubit/provider_current_orders/cubit.dart';
 import '../../../../bloc/provider_orders_cubit/provider_old_orders_cubit/cubit.dart';
@@ -23,7 +21,6 @@ import '../../../../utils/text_style.dart';
 import '../../../base/auth_header.dart';
 import '../../../base/custom_bottom_sheet.dart';
 import '../../../base/custom_drop_down.dart';
-import '../../../base/filter_drop_down.dart';
 
 class MyOrdersProviders extends StatefulWidget {
   const MyOrdersProviders({super.key});

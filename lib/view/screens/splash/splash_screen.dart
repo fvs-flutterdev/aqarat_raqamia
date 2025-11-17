@@ -204,7 +204,8 @@ class _SplashScreenState extends State<SplashScreen>
             } else {
               isBioActiveForUser == true
                   ? _authenticateWithBiometrics()
-                  : navigateForwardReplace(MainScreenNavigation());
+                  : navigateForwardReplace(
+                      MainScreenNavigation()); //MainScreenNavigation
               //  _authenticateWithBiometrics();
               //  navigateForwardReplace(MainScreenNavigation());
               //  navigateForwardReplace(BiometricsAuth());
