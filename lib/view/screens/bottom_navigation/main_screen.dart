@@ -95,6 +95,11 @@ class _MainScreenNavigationState extends State<MainScreenNavigation> {
             //  ?:null;
           },
           builder: (context, state) {
+            // حفظ الـ tabs في متغير لتجنب إعادة الإنشاء
+            final tabs = accountType == 'service_provider'
+                ? navBarCubit.providersItems()
+                : navBarCubit.clientItems();
+
             return BlocListener<ProfileCubit, ProfileState>(
               listener: (context, state) {},
               child: GestureDetector(
@@ -109,10 +114,12 @@ class _MainScreenNavigationState extends State<MainScreenNavigation> {
 
                     //   navBarOverlap: ,
                     onTabChanged: (index) {
-                      print(
-                          '/////////////////////////////$index ##################');
+                      // تحديث الفهرس فوراً بدون انتظار
                       navBarCubit.changeCurrentIndex(index);
-                      isBottomSheetOpen();
+                      // تشغيل isBottomSheetOpen بشكل غير متزامن
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        isBottomSheetOpen();
+                      });
                       // if (index == 0) {
                       //   partnerSponsorCubit.playVideo();
                       //   //  partnerSponsorCubit.getPartnerSponsor();
@@ -133,9 +140,7 @@ class _MainScreenNavigationState extends State<MainScreenNavigation> {
                       // }
                     },
 
-                    tabs: accountType != 'service_provider'
-                        ? navBarCubit.providersItems()
-                        : navBarCubit.clientItems(),
+                    tabs: tabs,
                     // tabs:
                     // accountType == 'service_provider' ?
                     // navBarCubit.clientItems()
@@ -193,8 +198,8 @@ class StyleBottomNavBarWidget extends StatelessWidget {
         splashColor: item.activeForegroundColor.withOpacity(0.1),
         child: AnimatedContainer(
           color: Colors.transparent,
-          duration: Duration(milliseconds: 200),
-          curve: Curves.easeInOut,
+          duration: Duration(milliseconds: 50),
+          curve: Curves.easeOut,
           padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -202,7 +207,7 @@ class StyleBottomNavBarWidget extends StatelessWidget {
             children: <Widget>[
               AnimatedContainer(
                 height: 44,
-                duration: Duration(milliseconds: 200),
+                duration: Duration(milliseconds: 50),
                 padding: EdgeInsets.all(isSelected ? 8.0 : 6.0),
                 decoration: BoxDecoration(
                   color: isSelected
@@ -227,7 +232,7 @@ class StyleBottomNavBarWidget extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(top: 4.0),
                   child: AnimatedDefaultTextStyle(
-                    duration: Duration(milliseconds: 200),
+                    duration: Duration(milliseconds: 50),
                     style: item.textStyle.apply(
                           color: isSelected
                               ? item.activeForegroundColor
@@ -266,8 +271,8 @@ class StyleBottomNavBarWidget extends StatelessWidget {
               );
             },
             child: AnimatedContainer(
-              duration: Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
+              duration: Duration(milliseconds: 50),
+              curve: Curves.easeOut,
               child: FloatingActionButton(
                 onPressed: () {
                   navBarConfig.onItemSelected(
@@ -278,7 +283,7 @@ class StyleBottomNavBarWidget extends StatelessWidget {
                 backgroundColor: item.activeForegroundColor,
                 heroTag: "middleNavButton",
                 child: AnimatedSwitcher(
-                  duration: Duration(milliseconds: 200),
+                  duration: Duration(milliseconds: 50),
                   child: InkWell(
                     onTap: () {
                       navBarConfig.onItemSelected(
@@ -302,7 +307,7 @@ class StyleBottomNavBarWidget extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 6.0),
               child: AnimatedDefaultTextStyle(
-                duration: Duration(milliseconds: 200),
+                duration: Duration(milliseconds: 100),
                 style: item.textStyle.apply(
                       color: isSelected
                           ? item.activeForegroundColor

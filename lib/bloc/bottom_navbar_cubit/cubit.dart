@@ -197,8 +197,10 @@ class NavbarCubit extends Cubit<BottomNavbarState> {
   }
 
   changeCurrentIndex(int i) {
-    _selectedIndex = i;
-    emit(ChangeCurrentNavbarState());
+    if (_selectedIndex != i) {
+      _selectedIndex = i;
+      emit(ChangeCurrentNavbarState());
+    }
     //   update();
   }
 
