@@ -21,6 +21,7 @@ Future CustomBottomSheet(
   var regionCubit = context.read<RegionsCubit>();
   return showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       builder: (c) {
         return BlocConsumer<RegionsCubit, RegionState>(
           listener: (context, state) {
@@ -29,7 +30,7 @@ Future CustomBottomSheet(
           builder: (context, state) {
             return StatefulBuilder(builder: (context, StateSetter setState) {
               return Container(
-                  height: context.height * 0.75,
+                  height: context.height * 0.7,
                   child: regionCubit.isGetCities == false
                       ? adaptiveCircleProgress()
                       : Stack(
@@ -113,7 +114,7 @@ Future CustomBottomSheet(
                                       padding: EdgeInsetsDirectional.only(
                                           bottom: Dimensions
                                                   .PADDING_SIZE_OVER_LARGE *
-                                              3.sp),
+                                              3.1.sp),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
