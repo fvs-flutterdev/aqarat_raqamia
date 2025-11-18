@@ -790,7 +790,7 @@ class StyleBottomNavBar extends StatelessWidget {
     required this.navBarConfig,
     this.navBarDecoration = const NavBarDecoration(),
     this.height,
-    this.middleItemSize = 50,
+    this.middleItemSize = 45,
     super.key,
   }) : assert(
           navBarConfig.items.length.isOdd,
@@ -806,16 +806,16 @@ class StyleBottomNavBar extends StatelessWidget {
       AnimatedContainer(
         duration: Duration(milliseconds: 40),
         curve: Curves.easeOut,
-        padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+        padding: EdgeInsets.symmetric(vertical: 0, horizontal: 12.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             AnimatedContainer(
-              height: 40,
+              height: 35,
               duration: Duration(milliseconds: 40),
               curve: Curves.easeOut,
-              padding: EdgeInsets.all(isSelected ? 8.0 : 6.0),
+              padding: EdgeInsets.all(isSelected ? 2 : 0),
               decoration: BoxDecoration(
                 color: isSelected
                     ? item.activeForegroundColor.withOpacity(0.1)
@@ -824,7 +824,7 @@ class StyleBottomNavBar extends StatelessWidget {
               ),
               child: IconTheme(
                 data: IconThemeData(
-                  size: (item.iconSize ?? 22.0) + (isSelected ? 2.0 : 0.0),
+                  size: (item.iconSize ?? 22.0) + (isSelected ? 0 : 0.0),
                   color: isSelected
                       ? item.activeForegroundColor
                       : item.inactiveForegroundColor,
@@ -926,7 +926,7 @@ class StyleBottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final midIndex = (navBarConfig.items.length / 2).floor();
     return SizedBox(
-      height: height ?? 75.0,
+      height: height ?? 70.0,
       child: Stack(
         clipBehavior: Clip.none,
         alignment: Alignment.bottomCenter,
@@ -979,7 +979,7 @@ class StyleBottomNavBar extends StatelessWidget {
           ),
           // Floating Action Button in the middle
           Positioned(
-            top: -middleItemSize / 2 - 8,
+            top: -middleItemSize / 2 - 15,
             left: 0,
             right: 0,
             child: Center(

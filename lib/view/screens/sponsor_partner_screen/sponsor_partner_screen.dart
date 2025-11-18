@@ -129,31 +129,37 @@ class _SponsorPartnerScreenState extends State<SponsorPartnerScreen> {
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      partnerSponsorCubit
-                              .partnerSponsorModel.data!.backgroundImage!
-                              .endsWith(".mp4")
-                          ? partnerSponsorCubit
-                                  .videoPlayerController.value.isInitialized
-                              ? SizedBox(
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                  child: VideoPlayer(
-                                      partnerSponsorCubit.videoPlayerController),
-                                )
-                              : Container()
-                          : SizedBox(
-                              width: double.infinity,
-                              height: double.infinity,
-                              child: FancyShimmerImage(
-                                imageUrl:
-                                    //partnerSponsorCubit.partnerSponsorModel.data!.showBackgroundImage==false?'https://dashboard.redd.sa/dash/ad_promoteds/1732749500_company_image.jpg':
-                                    partnerSponsorCubit.partnerSponsorModel.data!
-                                        .backgroundImage!,
-                                errorWidget:
-                                    Image.asset(Images.SPLASH_BACKGROUND),
-                                boxFit: BoxFit.fill,
+                      Positioned(
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: -20,
+                        child: partnerSponsorCubit
+                                .partnerSponsorModel.data!.backgroundImage!
+                                .endsWith(".mp4")
+                            ? partnerSponsorCubit
+                                    .videoPlayerController.value.isInitialized
+                                ? SizedBox(
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    child: VideoPlayer(
+                                        partnerSponsorCubit.videoPlayerController),
+                                  )
+                                : Container()
+                            : SizedBox(
+                                width: double.infinity,
+                                height: double.infinity,
+                                child: FancyShimmerImage(
+                                  imageUrl:
+                                      //partnerSponsorCubit.partnerSponsorModel.data!.showBackgroundImage==false?'https://dashboard.redd.sa/dash/ad_promoteds/1732749500_company_image.jpg':
+                                      partnerSponsorCubit.partnerSponsorModel.data!
+                                          .backgroundImage!,
+                                  errorWidget:
+                                      Image.asset(Images.SPLASH_BACKGROUND),
+                                  boxFit: BoxFit.fill,
+                                ),
                               ),
-                            ),
+                      ),
                       Padding(
                         padding: EdgeInsets.only(
                           top: 18.0.sp,
