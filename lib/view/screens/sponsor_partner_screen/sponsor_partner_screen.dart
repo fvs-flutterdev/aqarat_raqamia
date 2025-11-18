@@ -123,10 +123,7 @@ class _SponsorPartnerScreenState extends State<SponsorPartnerScreen> {
                         );
                       });
                 },
-                child: Container(
-                  padding:
-                      EdgeInsetsDirectional.only(bottom: context.height * 0.07.h),
-                  // color: goldColor,
+                child: SizedBox(
                   width: double.infinity,
                   height: double.infinity,
                   child: Stack(
@@ -137,15 +134,16 @@ class _SponsorPartnerScreenState extends State<SponsorPartnerScreen> {
                               .endsWith(".mp4")
                           ? partnerSponsorCubit
                                   .videoPlayerController.value.isInitialized
-                              ? AspectRatio(
-                                  aspectRatio: partnerSponsorCubit
-                                      .videoPlayerController.value.aspectRatio,
+                              ? SizedBox(
+                                  width: double.infinity,
+                                  height: double.infinity,
                                   child: VideoPlayer(
                                       partnerSponsorCubit.videoPlayerController),
                                 )
                               : Container()
-                          : FittedBox(
-                              fit: BoxFit.fill,
+                          : SizedBox(
+                              width: double.infinity,
+                              height: double.infinity,
                               child: FancyShimmerImage(
                                 imageUrl:
                                     //partnerSponsorCubit.partnerSponsorModel.data!.showBackgroundImage==false?'https://dashboard.redd.sa/dash/ad_promoteds/1732749500_company_image.jpg':
@@ -157,7 +155,10 @@ class _SponsorPartnerScreenState extends State<SponsorPartnerScreen> {
                               ),
                             ),
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 18.0.sp),
+                        padding: EdgeInsets.only(
+                          top: 18.0.sp,
+                          bottom: context.height * 0.07.h,
+                        ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
