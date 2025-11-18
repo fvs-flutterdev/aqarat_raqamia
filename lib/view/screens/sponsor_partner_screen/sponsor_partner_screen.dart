@@ -105,6 +105,7 @@ class _SponsorPartnerScreenState extends State<SponsorPartnerScreen> {
                   : profileCubit.getServiceList();
               //  partnerSponsorCubit.playVideo();
               return GestureDetector(
+                behavior: HitTestBehavior.translucent,
                 onVerticalDragEnd:
                     (dragEndDetails) {
                   showModalBottomSheet(
@@ -173,11 +174,14 @@ class _SponsorPartnerScreenState extends State<SponsorPartnerScreen> {
                                 ? const SizedBox()
                                 : SafeArea(
                                     child: GestureDetector(
-                                      onTap: () =>
-                                          accountType == "service_provider"
-                                              ? navigateForward(
-                                                  ProfileProviderScreen())
-                                              : navigateForward(ProfileScreen()),
+                                      behavior: HitTestBehavior.opaque,
+                                      onTap: () {
+                                        if (accountType == "service_provider") {
+                                          navigateForward(ProfileProviderScreen());
+                                        } else {
+                                          navigateForward(ProfileScreen());
+                                        }
+                                      },
                                       child: PartnerWidget(
                                         image: profileCubit
                                             .profileModel.userProfile!.photo!,
