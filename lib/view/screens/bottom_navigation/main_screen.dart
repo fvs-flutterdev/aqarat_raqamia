@@ -805,12 +805,12 @@ class StyleBottomNavBar extends StatelessWidget {
   final double middleItemSize;
 
   Widget _buildItem(BuildContext context, ItemConfig item, bool isSelected) =>
-      Container(
+      SizedBox(
         width: double.infinity,
         child: AnimatedContainer(
           duration: Duration(milliseconds: 40),
           curve: Curves.easeOut,
-          padding: EdgeInsets.symmetric(vertical: 0, horizontal: 12.0),
+          padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
@@ -964,19 +964,25 @@ class StyleBottomNavBar extends StatelessWidget {
                     return Expanded(
                       child: Material(
                         color: Colors.transparent,
-                        child: InkWell(
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.opaque,
                           onTap: () {
                             navBarConfig.onItemSelected(index);
                           },
-                          borderRadius: BorderRadius.circular(16.0),
-                          splashColor:
-                              item.activeForegroundColor.withOpacity(0.1),
-                          highlightColor:
-                              item.activeForegroundColor.withOpacity(0.05),
-                          child: _buildItem(
-                            context,
-                            item,
-                            navBarConfig.selectedIndex == index,
+                          child: InkWell(
+                            onTap: () {
+                              navBarConfig.onItemSelected(index);
+                            },
+                            borderRadius: BorderRadius.circular(16.0),
+                            splashColor:
+                                item.activeForegroundColor.withOpacity(0.1),
+                            highlightColor:
+                                item.activeForegroundColor.withOpacity(0.05),
+                            child: _buildItem(
+                              context,
+                              item,
+                              navBarConfig.selectedIndex == index,
+                            ),
                           ),
                         ),
                       ),
