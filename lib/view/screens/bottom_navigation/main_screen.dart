@@ -804,66 +804,74 @@ class StyleBottomNavBar extends StatelessWidget {
   final double? height;
   final double middleItemSize;
 
-  Widget _buildItem(BuildContext context, ItemConfig item, bool isSelected) =>
-      SizedBox(
-        width: double.infinity,
-        child: AnimatedContainer(
-          duration: Duration(milliseconds: 40),
-          curve: Curves.easeOut,
-          padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              AnimatedContainer(
-                height: 35,
-                duration: Duration(milliseconds: 40),
-                curve: Curves.easeOut,
-                padding: EdgeInsets.all(isSelected ? 2 : 0),
-                decoration: BoxDecoration(
-                  color: isSelected
-                      ? item.activeForegroundColor.withOpacity(0.1)
-                      : Colors.transparent,
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                child: IconTheme(
-                  data: IconThemeData(
-                    size: (item.iconSize ?? 22.0) + (isSelected ? 0 : 0.0),
+  Widget _buildItem(BuildContext context, ItemConfig item, bool isSelected,
+          VoidCallback onTap) =>
+      GestureDetector(
+        onTap: onTap,
+        child: Container(
+          width: double.infinity,
+          child: AnimatedContainer(
+            duration: Duration(milliseconds: 40),
+            curve: Curves.easeOut,
+            padding: EdgeInsets.symmetric(vertical: 0, horizontal: 12.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                AnimatedContainer(
+                  height: 35,
+                  duration: Duration(milliseconds: 40),
+                  curve: Curves.easeOut,
+                  padding: EdgeInsets.all(isSelected ? 2 : 0),
+                  decoration: BoxDecoration(
                     color: isSelected
-                        ? item.activeForegroundColor
-                        : item.inactiveForegroundColor,
+                        ? item.activeForegroundColor.withOpacity(0.1)
+                        : Colors.transparent,
+                    borderRadius: BorderRadius.circular(12.0),
                   ),
-                  child: isSelected ? item.icon : item.inactiveIcon,
-                ),
-              ),
-              if (item.title != null)
-                Padding(
-                  padding: EdgeInsets.only(top: 4.0),
-                  child: AnimatedDefaultTextStyle(
-                    duration: Duration(milliseconds: 40),
-                    style: item.textStyle.apply(
-                          color: isSelected
-                              ? item.activeForegroundColor
-                              : item.inactiveForegroundColor,
-                          fontSizeFactor: isSelected ? 1.0 : 0.9,
-                        ) ??
-                        TextStyle(
-                          fontSize: isSelected ? 11.0 : 10.0,
-                          fontWeight:
-                              isSelected ? FontWeight.w600 : FontWeight.normal,
-                          color: isSelected
-                              ? item.activeForegroundColor
-                              : item.inactiveForegroundColor,
-                        ),
-                    child: Text(
-                      item.title!,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
+                  child: GestureDetector(
+                    onTap: onTap,
+                    child: IconTheme(
+                      data: IconThemeData(
+                        size: (item.iconSize ?? 22.0) + (isSelected ? 0 : 0.0),
+                        color: isSelected
+                            ? item.activeForegroundColor
+                            : item.inactiveForegroundColor,
+                      ),
+                      child: isSelected ? item.icon : item.inactiveIcon,
                     ),
                   ),
                 ),
-            ],
+                if (item.title != null)
+                  Padding(
+                    padding: EdgeInsets.only(top: 4.0),
+                    child: AnimatedDefaultTextStyle(
+                      duration: Duration(milliseconds: 40),
+                      style: item.textStyle.apply(
+                            color: isSelected
+                                ? item.activeForegroundColor
+                                : item.inactiveForegroundColor,
+                            fontSizeFactor: isSelected ? 1.0 : 0.9,
+                          ) ??
+                          TextStyle(
+                            fontSize: isSelected ? 11.0 : 10.0,
+                            fontWeight: isSelected
+                                ? FontWeight.w600
+                                : FontWeight.normal,
+                            color: isSelected
+                                ? item.activeForegroundColor
+                                : item.inactiveForegroundColor,
+                          ),
+                      child: Text(
+                        item.title!,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
       );
@@ -964,25 +972,22 @@ class StyleBottomNavBar extends StatelessWidget {
                     return Expanded(
                       child: Material(
                         color: Colors.transparent,
-                        child: GestureDetector(
-                          behavior: HitTestBehavior.opaque,
+                        child: InkWell(
                           onTap: () {
                             navBarConfig.onItemSelected(index);
                           },
-                          child: InkWell(
-                            onTap: () {
+                          borderRadius: BorderRadius.circular(16.0),
+                          splashColor:
+                              item.activeForegroundColor.withOpacity(0.1),
+                          highlightColor:
+                              item.activeForegroundColor.withOpacity(0.05),
+                          child: _buildItem(
+                            context,
+                            item,
+                            navBarConfig.selectedIndex == index,
+                            () {
                               navBarConfig.onItemSelected(index);
                             },
-                            borderRadius: BorderRadius.circular(16.0),
-                            splashColor:
-                                item.activeForegroundColor.withOpacity(0.1),
-                            highlightColor:
-                                item.activeForegroundColor.withOpacity(0.05),
-                            child: _buildItem(
-                              context,
-                              item,
-                              navBarConfig.selectedIndex == index,
-                            ),
                           ),
                         ),
                       ),
