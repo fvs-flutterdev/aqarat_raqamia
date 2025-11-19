@@ -620,6 +620,8 @@
 // //   );
 // // }
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
@@ -871,6 +873,7 @@ class StyleBottomNavBar extends StatelessWidget {
             duration: Duration(milliseconds: 40),
             curve: Curves.easeOut,
             child: FloatingActionButton(
+
               onPressed: () {
                 navBarConfig.onItemSelected(
                   (navBarConfig.items.length / 2).floor(),
@@ -884,7 +887,7 @@ class StyleBottomNavBar extends StatelessWidget {
                 child: IconTheme(
                   key: ValueKey(isSelected),
                   data: IconThemeData(
-                    size: item.iconSize ?? 24.0,
+                    size: item.iconSize +10  ?? 24.0,
                     color: item.inactiveForegroundColor,
                   ),
                   child: isSelected ? item.icon : item.inactiveIcon,
@@ -940,7 +943,7 @@ class StyleBottomNavBar extends StatelessWidget {
               decoration: navBarDecoration,
               height: height,
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+                padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -979,7 +982,7 @@ class StyleBottomNavBar extends StatelessWidget {
           ),
           // Floating Action Button in the middle
           Positioned(
-            top: -middleItemSize / 2 - 15,
+            bottom: Platform.isIOS ? (middleItemSize +5) : middleItemSize,
             left: 0,
             right: 0,
             child: Center(
