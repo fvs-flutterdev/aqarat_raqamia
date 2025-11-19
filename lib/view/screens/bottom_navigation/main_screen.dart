@@ -939,7 +939,7 @@ class StyleBottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final midIndex = (navBarConfig.items.length / 2).floor();
     return SizedBox(
-      height: height ?? 70.0,
+      height: height ??( Platform.isIOS ?  100:70),
       child: Stack(
         clipBehavior: Clip.none,
         alignment: Alignment.bottomCenter,
